@@ -9,7 +9,7 @@ namespace LEFARM
     public class Koneksi
     {
         private static string alamat =
-            "Host=localhost;Port=5432;Username=postgres;Password=q123;Database=lefarmWinform";
+            "Host=localhost;Port=5432;Username=postgres;Password=stillwithyou;Database=LEFARM";
 
         public static NpgsqlConnection BuatKoneksi()
         {
