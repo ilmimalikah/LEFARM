@@ -112,5 +112,15 @@ namespace LEFARM
                 cbStatus.Text = row.Cells["status"].Value?.ToString() ?? "";
             }
         }
+
+        private void btnBersihkan_Click(object sender, EventArgs e)
+        {
+            txtIdKolam.Clear();
+            dtpTanggal.Value = DateTime.Now;
+            txtJam.Clear();
+            cbMetode.SelectedIndex = -1;
+            cbStatus.SelectedIndex = -1;
+            txtIdKolam.Focus();
+        }
     }
 }

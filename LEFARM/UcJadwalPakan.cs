@@ -1,7 +1,8 @@
-﻿using System;
+﻿using LEFARM.Model;
+using Npgsql;
+using System;
 using System.Data;
 using System.Windows.Forms;
-using Npgsql;
 
 namespace LEFARM
 {
@@ -119,6 +120,18 @@ namespace LEFARM
         private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnBersihkan_Click(object sender, EventArgs e)
+        {
+            txtIdKolam.Clear();
+            dtpTanggal.Value = DateTime.Now;
+            txtJam.Clear();
+            txtJenisPakan.Clear();
+            txtJumlahGram.Clear();
+            cbStatus.SelectedIndex = -1;
+
+            txtIdKolam.Focus();
         }
     }
 }
