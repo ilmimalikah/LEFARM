@@ -47,7 +47,7 @@
             // cmbKolam
             // 
             cmbKolam.FormattingEnabled = true;
-            cmbKolam.Location = new Point(20, 88);
+            cmbKolam.Location = new Point(17, 125);
             cmbKolam.Name = "cmbKolam";
             cmbKolam.Size = new Size(121, 23);
             cmbKolam.TabIndex = 0;
@@ -55,21 +55,21 @@
             // dtpTanggal
             // 
             dtpTanggal.CustomFormat = "11/11/2026";
-            dtpTanggal.Location = new Point(147, 88);
+            dtpTanggal.Location = new Point(144, 125);
             dtpTanggal.Name = "dtpTanggal";
             dtpTanggal.Size = new Size(135, 23);
             dtpTanggal.TabIndex = 1;
             // 
             // txtKeterangan
             // 
-            txtKeterangan.Location = new Point(289, 88);
+            txtKeterangan.Location = new Point(286, 125);
             txtKeterangan.Name = "txtKeterangan";
             txtKeterangan.Size = new Size(100, 23);
             txtKeterangan.TabIndex = 2;
             // 
             // txtJumlah
             // 
-            txtJumlah.Location = new Point(395, 88);
+            txtJumlah.Location = new Point(392, 125);
             txtJumlah.Name = "txtJumlah";
             txtJumlah.Size = new Size(100, 23);
             txtJumlah.TabIndex = 3;
@@ -77,7 +77,7 @@
             // lblKolam
             // 
             lblKolam.AutoSize = true;
-            lblKolam.Location = new Point(20, 70);
+            lblKolam.Location = new Point(17, 107);
             lblKolam.Name = "lblKolam";
             lblKolam.Size = new Size(41, 15);
             lblKolam.TabIndex = 4;
@@ -86,7 +86,7 @@
             // lblTanggal
             // 
             lblTanggal.AutoSize = true;
-            lblTanggal.Location = new Point(147, 70);
+            lblTanggal.Location = new Point(144, 107);
             lblTanggal.Name = "lblTanggal";
             lblTanggal.Size = new Size(48, 15);
             lblTanggal.TabIndex = 5;
@@ -95,7 +95,7 @@
             // lblKeterangan
             // 
             lblKeterangan.AutoSize = true;
-            lblKeterangan.Location = new Point(289, 70);
+            lblKeterangan.Location = new Point(286, 107);
             lblKeterangan.Name = "lblKeterangan";
             lblKeterangan.Size = new Size(67, 15);
             lblKeterangan.TabIndex = 6;
@@ -104,7 +104,7 @@
             // lblJumlah
             // 
             lblJumlah.AutoSize = true;
-            lblJumlah.Location = new Point(395, 70);
+            lblJumlah.Location = new Point(392, 107);
             lblJumlah.Name = "lblJumlah";
             lblJumlah.Size = new Size(70, 15);
             lblJumlah.TabIndex = 7;
@@ -112,7 +112,7 @@
             // 
             // btnTambah
             // 
-            btnTambah.Location = new Point(20, 129);
+            btnTambah.Location = new Point(17, 166);
             btnTambah.Name = "btnTambah";
             btnTambah.Size = new Size(75, 23);
             btnTambah.TabIndex = 8;
@@ -121,7 +121,7 @@
             // 
             // btnUbah
             // 
-            btnUbah.Location = new Point(101, 129);
+            btnUbah.Location = new Point(98, 166);
             btnUbah.Name = "btnUbah";
             btnUbah.Size = new Size(75, 23);
             btnUbah.TabIndex = 9;
@@ -130,7 +130,7 @@
             // 
             // btnHapus
             // 
-            btnHapus.Location = new Point(182, 129);
+            btnHapus.Location = new Point(179, 166);
             btnHapus.Name = "btnHapus";
             btnHapus.Size = new Size(75, 23);
             btnHapus.TabIndex = 10;
@@ -139,7 +139,7 @@
             // 
             // btnBersihkan
             // 
-            btnBersihkan.Location = new Point(263, 129);
+            btnBersihkan.Location = new Point(260, 166);
             btnBersihkan.Name = "btnBersihkan";
             btnBersihkan.Size = new Size(75, 23);
             btnBersihkan.TabIndex = 11;
@@ -155,7 +155,7 @@
             dgvPemasukan.BackgroundColor = Color.White;
             dgvPemasukan.BorderStyle = BorderStyle.Fixed3D;
             dgvPemasukan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPemasukan.Location = new Point(20, 168);
+            dgvPemasukan.Location = new Point(17, 205);
             dgvPemasukan.MultiSelect = false;
             dgvPemasukan.Name = "dgvPemasukan";
             dgvPemasukan.ReadOnly = true;
