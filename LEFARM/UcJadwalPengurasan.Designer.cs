@@ -58,9 +58,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(27, 35);
             label1.Name = "label1";
-            label1.Size = new Size(77, 20);
+            label1.Size = new Size(58, 20);
             label1.TabIndex = 1;
-            label1.Text = "ID KOLAM";
+            label1.Text = "KOLAM";
             // 
             // txtJam
             // 
@@ -80,6 +80,7 @@
             // 
             // dtpTanggal
             // 
+            dtpTanggal.Format = DateTimePickerFormat.Custom;
             dtpTanggal.Location = new Point(168, 56);
             dtpTanggal.Name = "dtpTanggal";
             dtpTanggal.Size = new Size(250, 27);
@@ -133,9 +134,9 @@
             // btnSimpan
             // 
             btnSimpan.BackColor = Color.Silver;
-            btnSimpan.Location = new Point(27, 114);
+            btnSimpan.Location = new Point(27, 111);
             btnSimpan.Name = "btnSimpan";
-            btnSimpan.Size = new Size(146, 58);
+            btnSimpan.Size = new Size(125, 36);
             btnSimpan.TabIndex = 10;
             btnSimpan.Text = "SIMPAN";
             btnSimpan.UseVisualStyleBackColor = false;
@@ -144,9 +145,9 @@
             // btnUbah
             // 
             btnUbah.BackColor = Color.Silver;
-            btnUbah.Location = new Point(179, 114);
+            btnUbah.Location = new Point(179, 111);
             btnUbah.Name = "btnUbah";
-            btnUbah.Size = new Size(125, 58);
+            btnUbah.Size = new Size(99, 36);
             btnUbah.TabIndex = 11;
             btnUbah.Text = "UBAH";
             btnUbah.UseVisualStyleBackColor = false;
@@ -155,9 +156,9 @@
             // btnHapus
             // 
             btnHapus.BackColor = Color.Silver;
-            btnHapus.Location = new Point(310, 114);
+            btnHapus.Location = new Point(304, 111);
             btnHapus.Name = "btnHapus";
-            btnHapus.Size = new Size(126, 58);
+            btnHapus.Size = new Size(96, 36);
             btnHapus.TabIndex = 12;
             btnHapus.Text = "HAPUS";
             btnHapus.UseVisualStyleBackColor = false;
@@ -166,18 +167,18 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(27, 192);
+            dataGridView1.Location = new Point(27, 169);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(924, 188);
+            dataGridView1.Size = new Size(930, 188);
             dataGridView1.TabIndex = 13;
             // 
             // btnBersihkan
             // 
             btnBersihkan.BackColor = Color.Silver;
-            btnBersihkan.Location = new Point(442, 114);
+            btnBersihkan.Location = new Point(424, 111);
             btnBersihkan.Name = "btnBersihkan";
-            btnBersihkan.Size = new Size(141, 58);
+            btnBersihkan.Size = new Size(118, 36);
             btnBersihkan.TabIndex = 14;
             btnBersihkan.Text = "BERSIHKAN";
             btnBersihkan.UseVisualStyleBackColor = false;
