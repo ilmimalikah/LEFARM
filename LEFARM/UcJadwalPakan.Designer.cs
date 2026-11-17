@@ -60,9 +60,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(29, 33);
             label1.Name = "label1";
-            label1.Size = new Size(77, 20);
+            label1.Size = new Size(58, 20);
             label1.TabIndex = 1;
-            label1.Text = "ID KOLAM";
+            label1.Text = "KOLAM";
             // 
             // txtJam
             // 
@@ -74,7 +74,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(439, 33);
+            label2.Location = new Point(419, 33);
             label2.Name = "label2";
             label2.Size = new Size(37, 20);
             label2.TabIndex = 3;
@@ -82,6 +82,7 @@
             // 
             // dtpTanggal
             // 
+            dtpTanggal.Format = DateTimePickerFormat.Custom;
             dtpTanggal.Location = new Point(163, 56);
             dtpTanggal.Name = "dtpTanggal";
             dtpTanggal.Size = new Size(250, 27);
@@ -90,7 +91,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(173, 33);
+            label3.Location = new Point(163, 33);
             label3.Name = "label3";
             label3.Size = new Size(74, 20);
             label3.TabIndex = 5;
@@ -131,7 +132,7 @@
             // cbStatus
             // 
             cbStatus.FormattingEnabled = true;
-            cbStatus.Items.AddRange(new object[] { "Belum Selesai", "Sedang Proses", "Selesai" });
+            cbStatus.Items.AddRange(new object[] { "Belum ", "Proses", "Selesai" });
             cbStatus.Location = new Point(812, 58);
             cbStatus.Name = "cbStatus";
             cbStatus.Size = new Size(151, 28);
@@ -150,9 +151,9 @@
             // btnSimpan
             // 
             btnSimpan.BackColor = Color.Silver;
-            btnSimpan.Location = new Point(29, 120);
+            btnSimpan.Location = new Point(29, 114);
             btnSimpan.Name = "btnSimpan";
-            btnSimpan.Size = new Size(128, 48);
+            btnSimpan.Size = new Size(115, 31);
             btnSimpan.TabIndex = 12;
             btnSimpan.Text = "SIMPAN";
             btnSimpan.UseVisualStyleBackColor = false;
@@ -161,9 +162,9 @@
             // btnUbah
             // 
             btnUbah.BackColor = Color.Silver;
-            btnUbah.Location = new Point(163, 120);
+            btnUbah.Location = new Point(163, 114);
             btnUbah.Name = "btnUbah";
-            btnUbah.Size = new Size(119, 48);
+            btnUbah.Size = new Size(96, 31);
             btnUbah.TabIndex = 13;
             btnUbah.Text = "UBAH";
             btnUbah.UseVisualStyleBackColor = false;
@@ -172,9 +173,9 @@
             // button1
             // 
             button1.BackColor = Color.Silver;
-            button1.Location = new Point(288, 120);
+            button1.Location = new Point(279, 114);
             button1.Name = "button1";
-            button1.Size = new Size(116, 48);
+            button1.Size = new Size(98, 31);
             button1.TabIndex = 14;
             button1.Text = "HAPUS";
             button1.UseVisualStyleBackColor = false;
@@ -182,18 +183,18 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(29, 202);
+            dataGridView1.Location = new Point(29, 165);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(903, 188);
+            dataGridView1.Size = new Size(934, 188);
             dataGridView1.TabIndex = 15;
             // 
             // btnBersihkan
             // 
             btnBersihkan.BackColor = Color.Silver;
-            btnBersihkan.Location = new Point(410, 120);
+            btnBersihkan.Location = new Point(397, 114);
             btnBersihkan.Name = "btnBersihkan";
-            btnBersihkan.Size = new Size(125, 48);
+            btnBersihkan.Size = new Size(125, 31);
             btnBersihkan.TabIndex = 16;
             btnBersihkan.Text = "BERSIHKAN";
             btnBersihkan.UseVisualStyleBackColor = false;
