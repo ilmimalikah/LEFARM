@@ -194,7 +194,7 @@
             Controls.Add(cmbKolam);
             Margin = new Padding(3, 4, 3, 4);
             Name = "UcPemasukan";
-            Size = new Size(982, 429);
+            Size = new Size(859, 322);
             ((System.ComponentModel.ISupportInitialize)dgvPemasukan).EndInit();
             ResumeLayout(false);
             PerformLayout();

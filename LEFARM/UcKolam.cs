@@ -186,5 +186,10 @@ namespace LEFARM
             txtNamaKolam.Text = Convert.ToString(baris.Cells["nama_kolam"].Value);
             txtUkuran.Text = Convert.ToString(baris.Cells["ukuran"].Value);
         }
+
+        private void UcKolam_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

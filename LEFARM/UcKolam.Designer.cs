@@ -43,67 +43,75 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(20, 20);
+            label1.Location = new Point(25, 25);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(96, 20);
+            label1.Size = new Size(114, 25);
             label1.TabIndex = 0;
             label1.Text = "Nama Kolam";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(220, 20);
+            label2.Location = new Point(275, 25);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(55, 20);
+            label2.Size = new Size(68, 25);
             label2.TabIndex = 1;
             label2.Text = "Ukuran";
             // 
             // txtNamaKolam
             // 
-            txtNamaKolam.Location = new Point(20, 42);
+            txtNamaKolam.Location = new Point(25, 52);
+            txtNamaKolam.Margin = new Padding(4, 4, 4, 4);
             txtNamaKolam.Name = "txtNamaKolam";
-            txtNamaKolam.Size = new Size(180, 27);
+            txtNamaKolam.Size = new Size(224, 31);
             txtNamaKolam.TabIndex = 4;
             // 
             // txtUkuran
             // 
-            txtUkuran.Location = new Point(220, 42);
+            txtUkuran.Location = new Point(275, 52);
+            txtUkuran.Margin = new Padding(4, 4, 4, 4);
             txtUkuran.Name = "txtUkuran";
-            txtUkuran.Size = new Size(140, 27);
+            txtUkuran.Size = new Size(174, 31);
             txtUkuran.TabIndex = 5;
             // 
             // btnTambah
             // 
-            btnTambah.Location = new Point(20, 80);
+            btnTambah.Location = new Point(25, 100);
+            btnTambah.Margin = new Padding(4, 4, 4, 4);
             btnTambah.Name = "btnTambah";
-            btnTambah.Size = new Size(100, 32);
+            btnTambah.Size = new Size(125, 40);
             btnTambah.TabIndex = 8;
             btnTambah.Text = "Tambah";
             btnTambah.UseVisualStyleBackColor = true;
             // 
             // btnUbah
             // 
-            btnUbah.Location = new Point(130, 80);
+            btnUbah.Location = new Point(162, 100);
+            btnUbah.Margin = new Padding(4, 4, 4, 4);
             btnUbah.Name = "btnUbah";
-            btnUbah.Size = new Size(100, 32);
+            btnUbah.Size = new Size(125, 40);
             btnUbah.TabIndex = 9;
             btnUbah.Text = "Ubah";
             btnUbah.UseVisualStyleBackColor = true;
             // 
             // btnHapus
             // 
-            btnHapus.Location = new Point(240, 80);
+            btnHapus.Location = new Point(300, 100);
+            btnHapus.Margin = new Padding(4, 4, 4, 4);
             btnHapus.Name = "btnHapus";
-            btnHapus.Size = new Size(100, 32);
+            btnHapus.Size = new Size(125, 40);
             btnHapus.TabIndex = 10;
             btnHapus.Text = "Hapus";
             btnHapus.UseVisualStyleBackColor = true;
             // 
             // btnBersihkan
             // 
-            btnBersihkan.Location = new Point(350, 80);
+            btnBersihkan.Location = new Point(438, 100);
+            btnBersihkan.Margin = new Padding(4, 4, 4, 4);
             btnBersihkan.Name = "btnBersihkan";
-            btnBersihkan.Size = new Size(100, 32);
+            btnBersihkan.Size = new Size(125, 40);
             btnBersihkan.TabIndex = 11;
             btnBersihkan.Text = "Clear";
             btnBersihkan.UseVisualStyleBackColor = true;
@@ -114,18 +122,19 @@
             dgvKolam.AllowUserToDeleteRows = false;
             dgvKolam.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvKolam.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvKolam.Location = new Point(20, 130);
+            dgvKolam.Location = new Point(25, 162);
+            dgvKolam.Margin = new Padding(4, 4, 4, 4);
             dgvKolam.Name = "dgvKolam";
             dgvKolam.ReadOnly = true;
             dgvKolam.RowHeadersVisible = false;
             dgvKolam.RowHeadersWidth = 51;
             dgvKolam.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvKolam.Size = new Size(920, 280);
+            dgvKolam.Size = new Size(1150, 350);
             dgvKolam.TabIndex = 12;
             // 
             // UcKolam
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(dgvKolam);
             Controls.Add(btnBersihkan);
@@ -136,6 +145,7 @@
             Controls.Add(txtNamaKolam);
             Controls.Add(label2);
             Controls.Add(label1);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "UcKolam";
             Size = new Size(982, 429);
             ((System.ComponentModel.ISupportInitialize)dgvKolam).EndInit();
