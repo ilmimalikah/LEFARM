@@ -10,7 +10,7 @@ using Npgsql;
 
 namespace LEFARM
 {
-    public partial class pUcLaporan : UserControl
+    public partial class UcLaporan : UserControl
     {
         private PrintDocument dokumenCetak = new PrintDocument();
         private int barisCetak = 0;
@@ -30,19 +30,16 @@ namespace LEFARM
 
             dokumenCetak.PrintPage += dokumenCetak_PrintPage;
         }
-        private void lblJudulPemasukan_Click(object sender, EventArgs e)
+
+        private void lblJudulPemasukan_Click(object? sender, EventArgs e)
         {
         }
 
-        private void lblNominalPemasukan_Click(object sender, EventArgs e)
+        private void lblNominalPemasukan_Click(object? sender, EventArgs e)
         {
         }
 
-        // =========================================
-        // 2. PERSIAPAN TAMPILAN
-        // =========================================
-
-        private void UcLaporan_Load(object sender, EventArgs e)
+        private void UcLaporan_Load(object? sender, EventArgs e)
         {
             try
             {
@@ -87,6 +84,7 @@ namespace LEFARM
 
             cmbBulan.SelectedIndex = DateTime.Now.Month - 1;
         }
+
         private void AturKolam()
         {
             string sql = @"
@@ -109,7 +107,7 @@ namespace LEFARM
                 cmbKolam.Items.Add(new PilihanKolam
                 {
                     Id = Convert.ToInt32(row["id_kolam"]),
-                    Nama = row["nama_kolam"].ToString()
+                    Nama = row["nama_kolam"].ToString() ?? ""
                 });
             }
 
@@ -117,7 +115,7 @@ namespace LEFARM
             cmbKolam.SelectedIndex = 0;
         }
 
-        private void btnTampilkan_Click(object sender, EventArgs e)
+        private void btnTampilkan_Click(object? sender, EventArgs e)
         {
             TampilkanLaporan();
         }
@@ -156,8 +154,7 @@ namespace LEFARM
             }
         }
 
-        private void HitungTotalPemasukan(
-            int bulan, int tahun, int idKolam)
+        private void HitungTotalPemasukan(int bulan, int tahun, int idKolam)
         {
             string sql = @"
                 SELECT
@@ -194,12 +191,10 @@ namespace LEFARM
                 }
             }
 
-            lblNominalPemasukan.Text =
-                FormatRupiah(totalPemasukan);
+            lblNominalPemasukan.Text = FormatRupiah(totalPemasukan);
         }
 
-        private void HitungTotalPengeluaran(
-            int bulan, int tahun, int idKolam)
+        private void HitungTotalPengeluaran(int bulan, int tahun, int idKolam)
         {
             string sql = @"
                 SELECT COALESCE(SUM(jumlah), 0)
@@ -223,18 +218,15 @@ namespace LEFARM
                 }
             }
 
-            lblNominalPengeluaran.Text =
-                FormatRupiah(totalPengeluaran);
+            lblNominalPengeluaran.Text = FormatRupiah(totalPengeluaran);
         }
 
         private void HitungLabaRugi()
         {
-            decimal hasil =
-                totalPemasukan - totalPengeluaran;
-
-            lblNominalLabaRugi.Text =
-                FormatRupiah(hasil);
+            decimal hasil = totalPemasukan - totalPengeluaran;
+            lblNominalLabaRugi.Text = FormatRupiah(hasil);
         }
+
         private string FormatRupiah(decimal angka)
         {
             return "Rp " + angka.ToString(
@@ -242,8 +234,8 @@ namespace LEFARM
                 CultureInfo.GetCultureInfo("id-ID")
             );
         }
-        private void TampilkanDataGridView(
-            int bulan, int tahun, int idKolam)
+
+        private void TampilkanDataGridView(int bulan, int tahun, int idKolam)
         {
             string sql = @"
                 SELECT
@@ -300,17 +292,11 @@ namespace LEFARM
                         while (reader.Read())
                         {
                             dgvLaporan.Rows.Add(
-                                Convert.ToDateTime(
-                                    reader["tanggal_transaksi"]
-                                ).ToString("dd/MM/yyyy"),
-
+                                Convert.ToDateTime(reader["tanggal_transaksi"])
+                                    .ToString("dd/MM/yyyy"),
                                 reader["jenis"].ToString(),
-
                                 reader["keterangan"].ToString(),
-
-                                FormatRupiah(
-                                    Convert.ToDecimal(reader["jumlah"])
-                                )
+                                FormatRupiah(Convert.ToDecimal(reader["jumlah"]))
                             );
                         }
                     }
@@ -318,7 +304,7 @@ namespace LEFARM
             }
         }
 
-        private void btnCetak_Click(object sender, EventArgs e)
+        private void btnCetak_Click(object? sender, EventArgs e)
         {
             if (dgvLaporan.Rows.Count == 0)
             {
@@ -335,8 +321,8 @@ namespace LEFARM
                 preview.ShowDialog();
             }
         }
-        private void dokumenCetak_PrintPage(
-            object sender, PrintPageEventArgs e)
+
+        private void dokumenCetak_PrintPage(object? sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
 
@@ -390,8 +376,7 @@ namespace LEFARM
 
                 while (barisCetak < dgvLaporan.Rows.Count)
                 {
-                    DataGridViewRow row =
-                        dgvLaporan.Rows[barisCetak];
+                    DataGridViewRow row = dgvLaporan.Rows[barisCetak];
 
                     string isi =
                         row.Cells[0].Value + " | " +
@@ -399,13 +384,7 @@ namespace LEFARM
                         row.Cells[2].Value + " | " +
                         row.Cells[3].Value;
 
-                    g.DrawString(
-                        isi,
-                        fontIsi,
-                        Brushes.Black,
-                        40,
-                        posisiY
-                    );
+                    g.DrawString(isi, fontIsi, Brushes.Black, 40, posisiY);
 
                     posisiY += 22;
                     barisCetak++;
@@ -422,7 +401,7 @@ namespace LEFARM
             e.HasMorePages = false;
         }
 
-        private void btnEksporExcel_Click(object sender, EventArgs e)
+        private void btnEksporExcel_Click(object? sender, EventArgs e)
         {
             if (dgvLaporan.Rows.Count == 0)
             {
@@ -439,9 +418,7 @@ namespace LEFARM
                 {
                     StringBuilder isi = new StringBuilder();
 
-                    isi.AppendLine(
-                        "Tanggal,Jenis,Keterangan,Jumlah (Rp)"
-                    );
+                    isi.AppendLine("Tanggal,Jenis,Keterangan,Jumlah (Rp)");
 
                     foreach (DataGridViewRow row in dgvLaporan.Rows)
                     {
@@ -471,18 +448,17 @@ namespace LEFARM
                 }
             }
         }
-        private string CSV(object nilai)
+
+        private string CSV(object? nilai)
         {
             string teks = nilai?.ToString() ?? "";
-
             return "\"" + teks.Replace("\"", "\"\"") + "\"";
         }
 
         private class PilihanKolam
         {
             public int Id { get; set; }
-
-            public string Nama { get; set; }
+            public string Nama { get; set; } = "";
 
             public override string ToString()
             {

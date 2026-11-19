@@ -2,15 +2,8 @@
 {
     partial class UcPanen
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -197,7 +190,7 @@
             // 
             dgvPanen.AllowUserToAddRows = false;
             dgvPanen.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvPanen.BackgroundColor = SystemColors.ControlLightLight;
+            dgvPanen.BackgroundColor = SystemColors.ButtonFace;
             dgvPanen.ColumnHeadersHeight = 45;
             dgvPanen.Columns.AddRange(new DataGridViewColumn[] { colIdPanen, colKolam, colTanggalPanen, colBeratKg, colHargaPerKg, colTotalHarga });
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -214,7 +207,7 @@
             dgvPanen.RowHeadersVisible = false;
             dgvPanen.RowHeadersWidth = 62;
             dgvPanen.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPanen.Size = new Size(936, 259);
+            dgvPanen.Size = new Size(936, 264);
             dgvPanen.TabIndex = 14;
             dgvPanen.CellContentClick += dgvPanen_CellContentClick;
             // 

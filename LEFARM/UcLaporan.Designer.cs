@@ -1,16 +1,9 @@
-﻿
-namespace LEFARM
+﻿namespace LEFARM
 {
-    partial class UcLaporan
+    public partial class UcLaporan : UserControl
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -53,7 +46,6 @@ namespace LEFARM
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).BeginInit();
             SuspendLayout();
 
-            // lblBulan
             lblBulan.AutoSize = true;
             lblBulan.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblBulan.Location = new Point(38, 55);
@@ -62,7 +54,6 @@ namespace LEFARM
             lblBulan.TabIndex = 0;
             lblBulan.Text = "Bulan";
 
-            // cmbBulan
             cmbBulan.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBulan.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbBulan.FormattingEnabled = true;
@@ -71,7 +62,6 @@ namespace LEFARM
             cmbBulan.Size = new Size(182, 30);
             cmbBulan.TabIndex = 1;
 
-            // lblKolam
             lblKolam.AutoSize = true;
             lblKolam.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblKolam.Location = new Point(242, 55);
@@ -80,7 +70,6 @@ namespace LEFARM
             lblKolam.TabIndex = 2;
             lblKolam.Text = "Kolam";
 
-            // cmbKolam
             cmbKolam.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbKolam.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbKolam.FormattingEnabled = true;
@@ -89,7 +78,6 @@ namespace LEFARM
             cmbKolam.Size = new Size(182, 30);
             cmbKolam.TabIndex = 3;
 
-            // btnTampilkan
             btnTampilkan.BackColor = Color.FromArgb(128, 128, 255);
             btnTampilkan.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnTampilkan.Location = new Point(442, 55);
@@ -99,7 +87,6 @@ namespace LEFARM
             btnTampilkan.Text = "Tampilkan";
             btnTampilkan.UseVisualStyleBackColor = false;
 
-            // btnCetak
             btnCetak.BackColor = Color.FromArgb(255, 128, 255);
             btnCetak.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCetak.Location = new Point(612, 55);
@@ -109,7 +96,6 @@ namespace LEFARM
             btnCetak.Text = "Cetak";
             btnCetak.UseVisualStyleBackColor = false;
 
-            // btnEksporExcel
             btnEksporExcel.BackColor = Color.FromArgb(128, 255, 255);
             btnEksporExcel.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEksporExcel.Location = new Point(775, 55);
@@ -119,7 +105,6 @@ namespace LEFARM
             btnEksporExcel.Text = "Ekspor Excel";
             btnEksporExcel.UseVisualStyleBackColor = false;
 
-            // panelPemasukan
             panelPemasukan.Controls.Add(lblNominalPemasukan);
             panelPemasukan.Controls.Add(lblJudulPemasukan);
             panelPemasukan.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -128,7 +113,6 @@ namespace LEFARM
             panelPemasukan.Size = new Size(299, 76);
             panelPemasukan.TabIndex = 7;
 
-            // lblNominalPemasukan
             lblNominalPemasukan.AutoSize = true;
             lblNominalPemasukan.Location = new Point(13, 41);
             lblNominalPemasukan.Name = "lblNominalPemasukan";
@@ -136,7 +120,6 @@ namespace LEFARM
             lblNominalPemasukan.TabIndex = 8;
             lblNominalPemasukan.Text = "Rp 0";
 
-            // lblJudulPemasukan
             lblJudulPemasukan.AutoSize = true;
             lblJudulPemasukan.ForeColor = SystemColors.ActiveCaptionText;
             lblJudulPemasukan.Location = new Point(3, 9);
@@ -146,7 +129,6 @@ namespace LEFARM
             lblJudulPemasukan.Text = "Total Pemasukan (termasuk panen)";
             lblJudulPemasukan.Click += lblJudulPemasukan_Click;
 
-            // panel1
             panel1.Controls.Add(lblNominalPengeluaran);
             panel1.Controls.Add(lblJudulPengeluaran);
             panel1.Location = new Point(360, 122);
@@ -154,7 +136,6 @@ namespace LEFARM
             panel1.Size = new Size(288, 77);
             panel1.TabIndex = 8;
 
-            // lblJudulPengeluaran
             lblJudulPengeluaran.AutoSize = true;
             lblJudulPengeluaran.Location = new Point(14, 9);
             lblJudulPengeluaran.Name = "lblJudulPengeluaran";
@@ -162,7 +143,6 @@ namespace LEFARM
             lblJudulPengeluaran.TabIndex = 9;
             lblJudulPengeluaran.Text = "Total Pengeluaran";
 
-            // lblNominalPengeluaran
             lblNominalPengeluaran.AutoSize = true;
             lblNominalPengeluaran.Location = new Point(14, 41);
             lblNominalPengeluaran.Name = "lblNominalPengeluaran";
@@ -170,7 +150,6 @@ namespace LEFARM
             lblNominalPengeluaran.TabIndex = 10;
             lblNominalPengeluaran.Text = "Rp 0";
 
-            // panelLabaRugi
             panelLabaRugi.Controls.Add(lblNominalLabaRugi);
             panelLabaRugi.Controls.Add(lblJudulLabaRugi);
             panelLabaRugi.Location = new Point(677, 122);
@@ -178,7 +157,6 @@ namespace LEFARM
             panelLabaRugi.Size = new Size(259, 76);
             panelLabaRugi.TabIndex = 9;
 
-            // lblJudulLabaRugi
             lblJudulLabaRugi.AutoSize = true;
             lblJudulLabaRugi.Location = new Point(14, 8);
             lblJudulLabaRugi.Name = "lblJudulLabaRugi";
@@ -186,7 +164,6 @@ namespace LEFARM
             lblJudulLabaRugi.TabIndex = 0;
             lblJudulLabaRugi.Text = "Laba / Rugi";
 
-            // lblNominalLabaRugi
             lblNominalLabaRugi.AutoSize = true;
             lblNominalLabaRugi.Location = new Point(14, 37);
             lblNominalLabaRugi.Name = "lblNominalLabaRugi";
@@ -194,7 +171,6 @@ namespace LEFARM
             lblNominalLabaRugi.TabIndex = 1;
             lblNominalLabaRugi.Text = "Rp 0";
 
-            // dgvLaporan
             dgvLaporan.AllowUserToAddRows = false;
             dgvLaporan.AllowUserToDeleteRows = false;
             dgvLaporan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -214,27 +190,22 @@ namespace LEFARM
             dgvLaporan.Size = new Size(898, 164);
             dgvLaporan.TabIndex = 10;
 
-            // colTanggal
             colTanggal.HeaderText = "Tanggal";
             colTanggal.MinimumWidth = 8;
             colTanggal.Name = "colTanggal";
 
-            // colJenis
             colJenis.HeaderText = "Jenis";
             colJenis.MinimumWidth = 8;
             colJenis.Name = "colJenis";
 
-            // colKeterangan
             colKeterangan.HeaderText = "Keterangan";
             colKeterangan.MinimumWidth = 8;
             colKeterangan.Name = "colKeterangan";
 
-            // colJumlah
             colJumlah.HeaderText = "Jumlah (Rp)";
             colJumlah.MinimumWidth = 8;
             colJumlah.Name = "colJumlah";
 
-            // UcLaporan
             AutoScaleDimensions = new SizeF(10F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
