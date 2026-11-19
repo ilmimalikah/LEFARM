@@ -49,118 +49,127 @@
             // cmbKolam
             // 
             cmbKolam.FormattingEnabled = true;
-            cmbKolam.Location = new Point(15, 102);
+            cmbKolam.Location = new Point(12, 54);
+            cmbKolam.Margin = new Padding(3, 4, 3, 4);
             cmbKolam.Name = "cmbKolam";
-            cmbKolam.Size = new Size(121, 23);
+            cmbKolam.Size = new Size(138, 28);
             cmbKolam.TabIndex = 0;
             // 
             // dtpTanggal
             // 
             dtpTanggal.CustomFormat = "11/11/2026";
-            dtpTanggal.Location = new Point(142, 102);
+            dtpTanggal.Location = new Point(157, 54);
+            dtpTanggal.Margin = new Padding(3, 4, 3, 4);
             dtpTanggal.Name = "dtpTanggal";
-            dtpTanggal.Size = new Size(135, 23);
+            dtpTanggal.Size = new Size(154, 27);
             dtpTanggal.TabIndex = 2;
             // 
             // cmbKategori
             // 
             cmbKategori.FormattingEnabled = true;
-            cmbKategori.Location = new Point(283, 102);
+            cmbKategori.Location = new Point(318, 54);
+            cmbKategori.Margin = new Padding(3, 4, 3, 4);
             cmbKategori.Name = "cmbKategori";
-            cmbKategori.Size = new Size(121, 23);
+            cmbKategori.Size = new Size(138, 28);
             cmbKategori.TabIndex = 3;
             // 
             // txtKeterangan
             // 
-            txtKeterangan.Location = new Point(410, 102);
+            txtKeterangan.Location = new Point(464, 54);
+            txtKeterangan.Margin = new Padding(3, 4, 3, 4);
             txtKeterangan.Name = "txtKeterangan";
-            txtKeterangan.Size = new Size(100, 23);
+            txtKeterangan.Size = new Size(114, 27);
             txtKeterangan.TabIndex = 4;
             // 
             // lblKolam
             // 
             lblKolam.AutoSize = true;
-            lblKolam.Location = new Point(15, 84);
+            lblKolam.Location = new Point(12, 30);
             lblKolam.Name = "lblKolam";
-            lblKolam.Size = new Size(41, 15);
+            lblKolam.Size = new Size(52, 20);
             lblKolam.TabIndex = 5;
             lblKolam.Text = "Kolam";
             // 
             // lblTanggal
             // 
             lblTanggal.AutoSize = true;
-            lblTanggal.Location = new Point(142, 84);
+            lblTanggal.Location = new Point(157, 30);
             lblTanggal.Name = "lblTanggal";
-            lblTanggal.Size = new Size(48, 15);
+            lblTanggal.Size = new Size(61, 20);
             lblTanggal.TabIndex = 6;
             lblTanggal.Text = "Tanggal";
             // 
             // lblKategori
             // 
             lblKategori.AutoSize = true;
-            lblKategori.Location = new Point(283, 84);
+            lblKategori.Location = new Point(318, 30);
             lblKategori.Name = "lblKategori";
-            lblKategori.Size = new Size(51, 15);
+            lblKategori.Size = new Size(66, 20);
             lblKategori.TabIndex = 7;
             lblKategori.Text = "Kategori";
             // 
             // lblKeterangan
             // 
             lblKeterangan.AutoSize = true;
-            lblKeterangan.Location = new Point(410, 84);
+            lblKeterangan.Location = new Point(464, 30);
             lblKeterangan.Name = "lblKeterangan";
-            lblKeterangan.Size = new Size(67, 15);
+            lblKeterangan.Size = new Size(85, 20);
             lblKeterangan.TabIndex = 8;
             lblKeterangan.Text = "Keterangan";
             // 
             // lblJumlah
             // 
             lblJumlah.AutoSize = true;
-            lblJumlah.Location = new Point(516, 84);
+            lblJumlah.Location = new Point(585, 30);
             lblJumlah.Name = "lblJumlah";
-            lblJumlah.Size = new Size(70, 15);
+            lblJumlah.Size = new Size(87, 20);
             lblJumlah.TabIndex = 9;
             lblJumlah.Text = "Jumlah (Rp)";
             // 
             // txtJumlah
             // 
-            txtJumlah.Location = new Point(516, 102);
+            txtJumlah.Location = new Point(585, 54);
+            txtJumlah.Margin = new Padding(3, 4, 3, 4);
             txtJumlah.Name = "txtJumlah";
-            txtJumlah.Size = new Size(100, 23);
+            txtJumlah.Size = new Size(114, 27);
             txtJumlah.TabIndex = 10;
             // 
             // btnTambah
             // 
-            btnTambah.Location = new Point(15, 144);
+            btnTambah.Location = new Point(12, 110);
+            btnTambah.Margin = new Padding(3, 4, 3, 4);
             btnTambah.Name = "btnTambah";
-            btnTambah.Size = new Size(75, 23);
+            btnTambah.Size = new Size(86, 31);
             btnTambah.TabIndex = 11;
             btnTambah.Text = "Tambah";
             btnTambah.UseVisualStyleBackColor = true;
             // 
             // btnUbah
             // 
-            btnUbah.Location = new Point(96, 144);
+            btnUbah.Location = new Point(105, 110);
+            btnUbah.Margin = new Padding(3, 4, 3, 4);
             btnUbah.Name = "btnUbah";
-            btnUbah.Size = new Size(75, 23);
+            btnUbah.Size = new Size(86, 31);
             btnUbah.TabIndex = 12;
             btnUbah.Text = "Ubah";
             btnUbah.UseVisualStyleBackColor = true;
             // 
             // btnHapus
             // 
-            btnHapus.Location = new Point(177, 144);
+            btnHapus.Location = new Point(197, 110);
+            btnHapus.Margin = new Padding(3, 4, 3, 4);
             btnHapus.Name = "btnHapus";
-            btnHapus.Size = new Size(75, 23);
+            btnHapus.Size = new Size(86, 31);
             btnHapus.TabIndex = 13;
             btnHapus.Text = "Hapus";
             btnHapus.UseVisualStyleBackColor = true;
             // 
             // btnBersihkan
             // 
-            btnBersihkan.Location = new Point(259, 144);
+            btnBersihkan.Location = new Point(291, 110);
+            btnBersihkan.Margin = new Padding(3, 4, 3, 4);
             btnBersihkan.Name = "btnBersihkan";
-            btnBersihkan.Size = new Size(75, 23);
+            btnBersihkan.Size = new Size(86, 31);
             btnBersihkan.TabIndex = 14;
             btnBersihkan.Text = "Bersihkan";
             btnBersihkan.UseVisualStyleBackColor = true;
@@ -171,17 +180,19 @@
             dgvPengeluaran.AllowUserToDeleteRows = false;
             dgvPengeluaran.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvPengeluaran.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPengeluaran.Location = new Point(15, 182);
+            dgvPengeluaran.Location = new Point(12, 161);
+            dgvPengeluaran.Margin = new Padding(3, 4, 3, 4);
             dgvPengeluaran.MultiSelect = false;
             dgvPengeluaran.Name = "dgvPengeluaran";
             dgvPengeluaran.ReadOnly = true;
+            dgvPengeluaran.RowHeadersWidth = 51;
             dgvPengeluaran.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPengeluaran.Size = new Size(941, 188);
+            dgvPengeluaran.Size = new Size(951, 251);
             dgvPengeluaran.TabIndex = 15;
             // 
             // UcPengeluaran
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             Controls.Add(dgvPengeluaran);
@@ -199,6 +210,7 @@
             Controls.Add(cmbKategori);
             Controls.Add(dtpTanggal);
             Controls.Add(cmbKolam);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "UcPengeluaran";
             Size = new Size(982, 429);
             ((System.ComponentModel.ISupportInitialize)dgvPengeluaran).EndInit();

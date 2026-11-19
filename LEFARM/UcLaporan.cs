@@ -10,7 +10,7 @@ using Npgsql;
 
 namespace LEFARM
 {
-    public partial class UcLaporan : UserControl 
+    public partial class pUcLaporan : UserControl
     {
         private PrintDocument dokumenCetak = new PrintDocument();
         private int barisCetak = 0;
@@ -37,6 +37,10 @@ namespace LEFARM
         private void lblNominalPemasukan_Click(object sender, EventArgs e)
         {
         }
+
+        // =========================================
+        // 2. PERSIAPAN TAMPILAN
+        // =========================================
 
         private void UcLaporan_Load(object sender, EventArgs e)
         {
