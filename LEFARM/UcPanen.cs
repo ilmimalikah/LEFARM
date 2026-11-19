@@ -12,27 +12,25 @@ namespace LEFARM
         {
             InitializeComponent();
 
-            // Event perhitungan total harga
+            dgvPanen.DefaultCellStyle.Font =
+            new Font("Arial", 9);
+
+            dgvPanen.ColumnHeadersDefaultCellStyle.Font =
+            new Font("Arial", 10);
+
             txtBeratKg.TextChanged += HitungTotalHarga;
             txtHargaPerKg.TextChanged += HitungTotalHarga;
 
-            // Event tombol
             btnTambah.Click += btnTambah_Click;
             btnUbah.Click += btnUbah_Click;
             btnHapus.Click += btnHapus_Click;
             btnBersihkan.Click += btnBersihkan_Click;
 
-            // Event DataGridView
             dgvPanen.CellClick += dgvPanen_CellClick;
 
-            // Memuat data
             IsiComboKolam();
             TampilkanData();
         }
-
-        // =====================================
-        // MENGISI COMBOBOX KOLAM
-        // =====================================
         private void IsiComboKolam()
         {
             try
@@ -55,10 +53,6 @@ namespace LEFARM
                 MessageBox.Show("Gagal mengambil data kolam: " + ex.Message);
             }
         }
-
-        // =====================================
-        // MENAMPILKAN DATA PANEN
-        // =====================================
         private void TampilkanData()
         {
             try
@@ -81,6 +75,10 @@ namespace LEFARM
 
                 dgvPanen.AutoGenerateColumns = false;
 
+                dgvPanen.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvPanen.MultiSelect = false;
+                dgvPanen.AllowUserToAddRows = false;
+
                 colIdPanen.DataPropertyName = "id_panen";
                 colKolam.DataPropertyName = "nama_kolam";
                 colTanggalPanen.DataPropertyName = "tanggal_panen";
@@ -95,10 +93,6 @@ namespace LEFARM
                 MessageBox.Show("Gagal menampilkan data panen: " + ex.Message);
             }
         }
-
-        // =====================================
-        // MENGHITUNG TOTAL HARGA
-        // =====================================
         private void HitungTotalHarga(object sender, EventArgs e)
         {
             decimal berat;
@@ -121,7 +115,10 @@ namespace LEFARM
             if (beratValid && hargaValid)
             {
                 txtTotalHarga.Text =
-                    (berat * harga).ToString("N2", CultureInfo.CurrentCulture);
+                    HitungTotalHarga(berat, harga).ToString(
+                        "N2",
+                        CultureInfo.CurrentCulture
+                    );
             }
             else
             {
@@ -129,9 +126,18 @@ namespace LEFARM
             }
         }
 
-        // =====================================
-        // VALIDASI INPUT
-        // =====================================
+        private decimal HitungTotalHarga(decimal berat, decimal harga)
+        {
+            return berat * harga;
+        }
+        private decimal HitungTotalHarga(
+            decimal berat,
+            decimal harga,
+            decimal diskon)
+        {
+            return (berat * harga) - diskon;
+        }
+
         private bool ValidasiInput()
         {
             if (cmbKolam.SelectedIndex == -1 ||
@@ -166,10 +172,6 @@ namespace LEFARM
 
             return true;
         }
-
-        // =====================================
-        // TOMBOL TAMBAH
-        // =====================================
         private void btnTambah_Click(object sender, EventArgs e)
         {
             if (!ValidasiInput())
@@ -178,9 +180,18 @@ namespace LEFARM
             try
             {
                 int idKolam = Convert.ToInt32(cmbKolam.SelectedValue);
-                decimal berat = decimal.Parse(txtBeratKg.Text, CultureInfo.CurrentCulture);
-                decimal harga = decimal.Parse(txtHargaPerKg.Text, CultureInfo.CurrentCulture);
-                decimal total = berat * harga;
+
+                decimal berat = decimal.Parse(
+                    txtBeratKg.Text,
+                    CultureInfo.CurrentCulture
+                );
+
+                decimal harga = decimal.Parse(
+                    txtHargaPerKg.Text,
+                    CultureInfo.CurrentCulture
+                );
+
+                decimal total = HitungTotalHarga(berat, harga);
 
                 string sql = @"
                     INSERT INTO panen
@@ -207,10 +218,6 @@ namespace LEFARM
                 MessageBox.Show("Gagal menambahkan data: " + ex.Message);
             }
         }
-
-        // =====================================
-        // TOMBOL UBAH
-        // =====================================
         private void btnUbah_Click(object sender, EventArgs e)
         {
             if (dgvPanen.CurrentRow == null)
@@ -229,9 +236,18 @@ namespace LEFARM
                 );
 
                 int idKolam = Convert.ToInt32(cmbKolam.SelectedValue);
-                decimal berat = decimal.Parse(txtBeratKg.Text, CultureInfo.CurrentCulture);
-                decimal harga = decimal.Parse(txtHargaPerKg.Text, CultureInfo.CurrentCulture);
-                decimal total = berat * harga;
+
+                decimal berat = decimal.Parse(
+                    txtBeratKg.Text,
+                    CultureInfo.CurrentCulture
+                );
+
+                decimal harga = decimal.Parse(
+                    txtHargaPerKg.Text,
+                    CultureInfo.CurrentCulture
+                );
+
+                decimal total = HitungTotalHarga(berat, harga);
 
                 string sql = @"
                     UPDATE panen
@@ -264,9 +280,6 @@ namespace LEFARM
             }
         }
 
-        // =====================================
-        // TOMBOL HAPUS
-        // =====================================
         private void btnHapus_Click(object sender, EventArgs e)
         {
             if (dgvPanen.CurrentRow == null)
@@ -292,8 +305,8 @@ namespace LEFARM
                 );
 
                 string sql = @"
-                    DELETE FROM panen
-                    WHERE id_panen = @id_panen";
+            DELETE FROM panen
+            WHERE id_panen = @id_panen";
 
                 Koneksi.Jalankan(
                     sql,
@@ -310,10 +323,6 @@ namespace LEFARM
                 MessageBox.Show("Gagal menghapus data: " + ex.Message);
             }
         }
-
-        // =====================================
-        // MEMILIH DATA DARI DATAGRIDVIEW
-        // =====================================
         private void dgvPanen_CellClick(
             object sender,
             DataGridViewCellEventArgs e)
@@ -353,10 +362,6 @@ namespace LEFARM
                 MessageBox.Show("Gagal memilih data: " + ex.Message);
             }
         }
-
-        // =====================================
-        // MEMBERSIHKAN INPUT
-        // =====================================
         private void BersihkanInput()
         {
             cmbKolam.SelectedIndex = -1;
@@ -370,18 +375,10 @@ namespace LEFARM
             dgvPanen.CurrentCell = null;
         }
 
-        // =====================================
-        // TOMBOL BERSIHKAN
-        // =====================================
         private void btnBersihkan_Click(object sender, EventArgs e)
         {
             BersihkanInput();
         }
-
-        // =====================================
-        // EVENT YANG SUDAH ADA DARI KODE AWAL
-        // =====================================
-        
 
         private void lblTanggalPanen_Click(object sender, EventArgs e)
         {
@@ -399,6 +396,16 @@ namespace LEFARM
             object sender,
             DataGridViewCellEventArgs e)
         {
+        }
+
+        private void lblBeratKg_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UcPanen_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

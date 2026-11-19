@@ -202,5 +202,10 @@ namespace LEFARM
             nudJumlahBibit.Value = Convert.ToDecimal(baris.Cells["jumlah_bibit"].Value);
             dtpTanggalTebar.Value = DateOnly.Parse(baris.Cells["tanggal_tebar"].Value.ToString()).ToDateTime(TimeOnly.MinValue);
         }
+
+        private void UcKolam_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

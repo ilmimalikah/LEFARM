@@ -1,17 +1,16 @@
-﻿
-using Npgsql;
-using System;
+﻿using System;
 using System.Data;
 using System.Globalization;
-using System.IO;
 using System.Text;
+using System.IO;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using Npgsql;
 
 namespace LEFARM
 {
-    public partial class panelPengeluaran : UserControl
+    public partial class UcLaporan : UserControl 
     {
         private PrintDocument dokumenCetak = new PrintDocument();
         private int barisCetak = 0;
@@ -19,11 +18,11 @@ namespace LEFARM
         private decimal totalPemasukan = 0;
         private decimal totalPengeluaran = 0;
 
-        public panelPengeluaran()
+        public UcLaporan()
         {
             InitializeComponent();
 
-            this.Load += panelPengeluaran_Load;
+            this.Load += UcLaporan_Load;
 
             btnTampilkan.Click += btnTampilkan_Click;
             btnCetak.Click += btnCetak_Click;
@@ -31,11 +30,6 @@ namespace LEFARM
 
             dokumenCetak.PrintPage += dokumenCetak_PrintPage;
         }
-
-        // =========================================
-        // 1. EVENT LABEL
-        // =========================================
-
         private void lblJudulPemasukan_Click(object sender, EventArgs e)
         {
         }
@@ -44,11 +38,7 @@ namespace LEFARM
         {
         }
 
-        // =========================================
-        // 2. PERSIAPAN TAMPILAN
-        // =========================================
-
-        private void panelPengeluaran_Load(object sender, EventArgs e)
+        private void UcLaporan_Load(object sender, EventArgs e)
         {
             try
             {
@@ -75,10 +65,6 @@ namespace LEFARM
             }
         }
 
-        // =========================================
-        // 3. MENGATUR PILIHAN BULAN
-        // =========================================
-
         private void AturBulan()
         {
             cmbBulan.Items.Clear();
@@ -97,11 +83,6 @@ namespace LEFARM
 
             cmbBulan.SelectedIndex = DateTime.Now.Month - 1;
         }
-
-        // =========================================
-        // 4. MENGAMBIL DATA KOLAM
-        // =========================================
-
         private void AturKolam()
         {
             string sql = @"
@@ -131,10 +112,6 @@ namespace LEFARM
             cmbKolam.DisplayMember = "Nama";
             cmbKolam.SelectedIndex = 0;
         }
-
-        // =========================================
-        // 5. TOMBOL TAMPILKAN
-        // =========================================
 
         private void btnTampilkan_Click(object sender, EventArgs e)
         {
@@ -174,10 +151,6 @@ namespace LEFARM
                 );
             }
         }
-
-        // =========================================
-        // 6. MENGHITUNG TOTAL PEMASUKAN
-        // =========================================
 
         private void HitungTotalPemasukan(
             int bulan, int tahun, int idKolam)
@@ -221,10 +194,6 @@ namespace LEFARM
                 FormatRupiah(totalPemasukan);
         }
 
-        // =========================================
-        // 7. MENGHITUNG TOTAL PENGELUARAN
-        // =========================================
-
         private void HitungTotalPengeluaran(
             int bulan, int tahun, int idKolam)
         {
@@ -254,10 +223,6 @@ namespace LEFARM
                 FormatRupiah(totalPengeluaran);
         }
 
-        // =========================================
-        // 8. MENGHITUNG LABA / RUGI
-        // =========================================
-
         private void HitungLabaRugi()
         {
             decimal hasil =
@@ -266,11 +231,6 @@ namespace LEFARM
             lblNominalLabaRugi.Text =
                 FormatRupiah(hasil);
         }
-
-        // =========================================
-        // 9. FORMAT RUPIAH
-        // =========================================
-
         private string FormatRupiah(decimal angka)
         {
             return "Rp " + angka.ToString(
@@ -278,11 +238,6 @@ namespace LEFARM
                 CultureInfo.GetCultureInfo("id-ID")
             );
         }
-
-        // =========================================
-        // 10. MENAMPILKAN DATA TRANSAKSI
-        // =========================================
-
         private void TampilkanDataGridView(
             int bulan, int tahun, int idKolam)
         {
@@ -359,10 +314,6 @@ namespace LEFARM
             }
         }
 
-        // =========================================
-        // 11. TOMBOL CETAK
-        // =========================================
-
         private void btnCetak_Click(object sender, EventArgs e)
         {
             if (dgvLaporan.Rows.Count == 0)
@@ -380,11 +331,6 @@ namespace LEFARM
                 preview.ShowDialog();
             }
         }
-
-        // =========================================
-        // 12. PROSES CETAK LAPORAN
-        // =========================================
-
         private void dokumenCetak_PrintPage(
             object sender, PrintPageEventArgs e)
         {
@@ -472,10 +418,6 @@ namespace LEFARM
             e.HasMorePages = false;
         }
 
-        // =========================================
-        // 13. TOMBOL EKSPOR EXCEL
-        // =========================================
-
         private void btnEksporExcel_Click(object sender, EventArgs e)
         {
             if (dgvLaporan.Rows.Count == 0)
@@ -525,21 +467,12 @@ namespace LEFARM
                 }
             }
         }
-
-        // =========================================
-        // 14. FORMAT DATA CSV
-        // =========================================
-
         private string CSV(object nilai)
         {
             string teks = nilai?.ToString() ?? "";
 
             return "\"" + teks.Replace("\"", "\"\"") + "\"";
         }
-
-        // =========================================
-        // 15. PILIHAN DATA KOLAM
-        // =========================================
 
         private class PilihanKolam
         {
