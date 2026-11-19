@@ -20,6 +20,16 @@ namespace LEFARM
 
             cbStatus.Text = "Belum";
 
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
+
+            dataGridView1.CellClick -= dataGridView1_CellClick;
+            dataGridView1.CellClick += dataGridView1_CellClick;
+
             TampilData();
         }
 
@@ -28,21 +38,22 @@ namespace LEFARM
             try
             {
                 string query = @"SELECT j.id_jadwal, k.nama_kolam, j.tanggal, j.jam,
-                                        j.metode, j.status
+                                        j.keterangan, j.status
                                  FROM jadwal_pengurasan j
                                  JOIN kolam k ON j.id_kolam = k.id_kolam
                                  ORDER BY j.tanggal, j.jam";
                 DataTable dt = Koneksi.AmbilData(query);
                 dataGridView1.DataSource = dt;
 
-                if (dataGridView1.Columns.Contains("id_jadwal"))
-                    dataGridView1.Columns["id_jadwal"].Visible = false;
+                dataGridView1.Columns["id_jadwal"].Visible = false;
 
-                if (dataGridView1.Columns.Contains("nama_kolam"))
-                    dataGridView1.Columns["nama_kolam"].HeaderText = "Nama Kolam";
+                dataGridView1.Columns["nama_kolam"].HeaderText = "Nama Kolam";
+                dataGridView1.Columns["tanggal"].HeaderText = "Tanggal";
+                dataGridView1.Columns["jam"].HeaderText = "Jam";
+                dataGridView1.Columns["keterangan"].HeaderText = "Keterangan";
+                dataGridView1.Columns["status"].HeaderText = "Status";
 
-                if (dataGridView1.Columns.Contains("tanggal"))
-                    dataGridView1.Columns["tanggal"].DefaultCellStyle.Format = "dd-MM-yyyy";
+                dataGridView1.Columns["tanggal"].DefaultCellStyle.Format = "dd-MM-yyyy";
             }
             catch (Exception ex)
             {
@@ -61,6 +72,7 @@ namespace LEFARM
 
             return Convert.ToInt32(dt.Rows[0]["id_kolam"]);
         }
+
         private JadwalPengurasan BuatObjek()
         {
             if (!TimeSpan.TryParse(txtJam.Text, out TimeSpan jam))
@@ -82,7 +94,7 @@ namespace LEFARM
                 new NpgsqlParameter("@kolam", NpgsqlDbType.Integer) { Value = j.IdKolam },
                 new NpgsqlParameter("@tgl", NpgsqlDbType.Date) { Value = j.Tanggal },
                 new NpgsqlParameter("@jam", NpgsqlDbType.Time) { Value = j.Jam },
-                new NpgsqlParameter("@metode", NpgsqlDbType.Varchar) { Value = j.Keterangan },
+                new NpgsqlParameter("@ket", NpgsqlDbType.Varchar) { Value = j.Keterangan },
                 new NpgsqlParameter("@status", NpgsqlDbType.Varchar) { Value = j.StatusKerja }
             };
         }
@@ -93,7 +105,7 @@ namespace LEFARM
             {
                 JadwalPengurasan jadwal = BuatObjek();
 
-                string query = "INSERT INTO jadwal_pengurasan (id_kolam, tanggal, jam, metode, status) VALUES (@kolam, @tgl, @jam, @metode, @status)";
+                string query = "INSERT INTO jadwal_pengurasan (id_kolam, tanggal, jam, keterangan, status) VALUES (@kolam, @tgl, @jam, @ket, @status)";
 
                 Koneksi.Jalankan(query, BuatParameter(jadwal));
                 MessageBox.Show("Data pengurasan berhasil disimpan!\n" + jadwal.Ringkasan());
@@ -121,7 +133,7 @@ namespace LEFARM
             {
                 JadwalPengurasan jadwal = BuatObjek();
 
-                string query = "UPDATE jadwal_pengurasan SET id_kolam=@kolam, tanggal=@tgl, jam=@jam, metode=@metode, status=@status WHERE id_jadwal=@id";
+                string query = "UPDATE jadwal_pengurasan SET id_kolam=@kolam, tanggal=@tgl, jam=@jam, keterangan=@ket, status=@status WHERE id_jadwal=@id";
 
                 NpgsqlParameter[] param = BuatParameter(jadwal);
                 Array.Resize(ref param, param.Length + 1);
@@ -194,7 +206,7 @@ namespace LEFARM
             else
                 txtJam.Text = "";
 
-            cbMetode.Text = row.Cells["metode"].Value?.ToString() ?? "";
+            cbMetode.Text = row.Cells["keterangan"].Value?.ToString() ?? "";
             cbStatus.Text = row.Cells["status"].Value?.ToString() ?? "";
         }
 

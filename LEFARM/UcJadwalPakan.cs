@@ -20,6 +20,16 @@ namespace LEFARM
 
             cbStatus.Text = "Belum";
 
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
+
+            dataGridView1.CellClick -= dataGridView1_CellClick;
+            dataGridView1.CellClick += dataGridView1_CellClick;
+
             TampilData();
         }
 
@@ -35,14 +45,16 @@ namespace LEFARM
                 DataTable dt = Koneksi.AmbilData(query);
                 dataGridView1.DataSource = dt;
 
-                if (dataGridView1.Columns.Contains("id_jadwal"))
-                    dataGridView1.Columns["id_jadwal"].Visible = false;
+                dataGridView1.Columns["id_jadwal"].Visible = false;
 
-                if (dataGridView1.Columns.Contains("nama_kolam"))
-                    dataGridView1.Columns["nama_kolam"].HeaderText = "Nama Kolam";
+                dataGridView1.Columns["nama_kolam"].HeaderText = "Nama Kolam";
+                dataGridView1.Columns["tanggal"].HeaderText = "Tanggal";
+                dataGridView1.Columns["jam"].HeaderText = "Jam";
+                dataGridView1.Columns["jenis_pakan"].HeaderText = "Jenis Pakan";
+                dataGridView1.Columns["jumlah_gram"].HeaderText = "Jumlah Gram";
+                dataGridView1.Columns["status"].HeaderText = "Status";
 
-                if (dataGridView1.Columns.Contains("tanggal"))
-                    dataGridView1.Columns["tanggal"].DefaultCellStyle.Format = "dd-MM-yyyy";
+                dataGridView1.Columns["tanggal"].DefaultCellStyle.Format = "dd-MM-yyyy";
             }
             catch (Exception ex)
             {
@@ -61,6 +73,7 @@ namespace LEFARM
 
             return Convert.ToInt32(dt.Rows[0]["id_kolam"]);
         }
+
         private JadwalPakan BuatObjek()
         {
             if (!TimeSpan.TryParse(txtJam.Text, out TimeSpan jam))
