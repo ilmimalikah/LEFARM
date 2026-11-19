@@ -4,6 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.Windows.Forms;
 using Npgsql;
+using LEFARM.Model;
 
 namespace LEFARM
 {
@@ -15,16 +16,13 @@ namespace LEFARM
         {
             InitializeComponent();
 
-            // Menghubungkan tombol dengan method
             btnTambah.Click += (s, e) => TambahData();
             btnUbah.Click += (s, e) => UbahData();
             btnHapus.Click += (s, e) => HapusData();
             btnBersihkan.Click += (s, e) => BersihkanForm();
 
-            // Memilih data dari tabel
             dgvPemasukan.CellClick += dgvPemasukan_CellClick;
 
-            // Memuat data ketika halaman dibuka
             this.Load += UcPemasukan_Load;
         }
 
@@ -35,7 +33,6 @@ namespace LEFARM
             BersihkanForm();
         }
 
-        // 1. Mengisi ComboBox dari tabel kolam
         private void IsiComboKolam()
         {
             try
@@ -55,7 +52,6 @@ namespace LEFARM
             }
         }
 
-        // 2. Menampilkan data pemasukan
         private void TampilkanData()
         {
             try
@@ -77,7 +73,8 @@ namespace LEFARM
 
                 dgvPemasukan.DataSource = tabel;
 
-                dgvPemasukan.Columns["id_kolam"].Visible = false;
+                if (dgvPemasukan.Columns.Contains("id_kolam"))
+                    dgvPemasukan.Columns["id_kolam"].Visible = false;
 
                 dgvPemasukan.Columns["Tanggal"]
                     .DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -91,13 +88,14 @@ namespace LEFARM
             }
         }
 
-        // 3. Memvalidasi input
         private bool ValidasiInput(out int idKolam, out decimal jumlah)
         {
             idKolam = 0;
             jumlah = 0;
 
-            if (cmbKolam.SelectedValue == null ||
+            if (cmbKolam.SelectedIndex < 0 ||
+                cmbKolam.SelectedValue == null ||
+                cmbKolam.SelectedValue is DataRowView ||
                 !int.TryParse(
                     cmbKolam.SelectedValue.ToString(),
                     out idKolam))
@@ -127,7 +125,6 @@ namespace LEFARM
             return true;
         }
 
-        // 4. Menambahkan data pemasukan
         private void TambahData()
         {
             if (!ValidasiInput(out int idKolam, out decimal jumlah))
@@ -135,6 +132,13 @@ namespace LEFARM
 
             try
             {
+                Transaksi transaksi = new Pemasukan(
+                    idKolam,
+                    dtpTanggal.Value.Date,
+                    txtKeterangan.Text.Trim(),
+                    jumlah
+                );
+
                 string sql = @"
                     INSERT INTO pemasukan
                     (id_kolam, tanggal, keterangan, jumlah)
@@ -143,13 +147,15 @@ namespace LEFARM
 
                 Koneksi.Jalankan(
                     sql,
-                    new NpgsqlParameter("@id_kolam", idKolam),
-                    new NpgsqlParameter("@tanggal", dtpTanggal.Value.Date),
-                    new NpgsqlParameter("@keterangan", txtKeterangan.Text.Trim()),
-                    new NpgsqlParameter("@jumlah", jumlah)
+                    new NpgsqlParameter("@id_kolam", transaksi.IdKolam),
+                    new NpgsqlParameter("@tanggal", transaksi.Tanggal),
+                    new NpgsqlParameter("@keterangan", transaksi.Keterangan),
+                    new NpgsqlParameter("@jumlah", transaksi.HitungNilai())
                 );
 
-                MessageBox.Show("Data pemasukan berhasil ditambahkan.");
+                MessageBox.Show(
+                    transaksi.AmbilJenis() + " berhasil ditambahkan."
+                );
 
                 TampilkanData();
                 BersihkanForm();
@@ -160,7 +166,6 @@ namespace LEFARM
             }
         }
 
-        // 5. Mengubah data pemasukan
         private void UbahData()
         {
             if (idPemasukan == 0)
@@ -174,6 +179,13 @@ namespace LEFARM
 
             try
             {
+                Transaksi transaksi = new Pemasukan(
+                    idKolam,
+                    dtpTanggal.Value.Date,
+                    txtKeterangan.Text.Trim(),
+                    jumlah
+                );
+
                 string sql = @"
                     UPDATE pemasukan
                     SET id_kolam = @id_kolam,
@@ -184,14 +196,16 @@ namespace LEFARM
 
                 Koneksi.Jalankan(
                     sql,
-                    new NpgsqlParameter("@id_kolam", idKolam),
-                    new NpgsqlParameter("@tanggal", dtpTanggal.Value.Date),
-                    new NpgsqlParameter("@keterangan", txtKeterangan.Text.Trim()),
-                    new NpgsqlParameter("@jumlah", jumlah),
+                    new NpgsqlParameter("@id_kolam", transaksi.IdKolam),
+                    new NpgsqlParameter("@tanggal", transaksi.Tanggal),
+                    new NpgsqlParameter("@keterangan", transaksi.Keterangan),
+                    new NpgsqlParameter("@jumlah", transaksi.HitungNilai()),
                     new NpgsqlParameter("@id", idPemasukan)
                 );
 
-                MessageBox.Show("Data pemasukan berhasil diubah.");
+                MessageBox.Show(
+                    transaksi.AmbilJenis() + " berhasil diubah."
+                );
 
                 TampilkanData();
                 BersihkanForm();
@@ -202,7 +216,6 @@ namespace LEFARM
             }
         }
 
-        // 6. Menghapus data pemasukan
         private void HapusData()
         {
             if (idPemasukan == 0)
@@ -243,7 +256,6 @@ namespace LEFARM
             }
         }
 
-        // 7. Mengambil data ketika baris tabel diklik
         private void dgvPemasukan_CellClick(
             object sender,
             DataGridViewCellEventArgs e)
@@ -266,10 +278,9 @@ namespace LEFARM
 
             txtJumlah.Text =
                 Convert.ToDecimal(baris.Cells["Jumlah (Rp)"].Value)
-                .ToString("N0", CultureInfo.GetCultureInfo("id-ID"));
+                .ToString("N2", CultureInfo.GetCultureInfo("id-ID"));
         }
 
-        // 8. Membersihkan seluruh input
         private void BersihkanForm()
         {
             idPemasukan = 0;

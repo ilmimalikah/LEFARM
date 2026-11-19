@@ -49,17 +49,16 @@
             // cmbKolam
             // 
             cmbKolam.FormattingEnabled = true;
-            cmbKolam.Location = new Point(12, 54);
-            cmbKolam.Margin = new Padding(3, 4, 3, 4);
+            cmbKolam.Location = new Point(12, 36);
             cmbKolam.Name = "cmbKolam";
             cmbKolam.Size = new Size(138, 28);
             cmbKolam.TabIndex = 0;
             // 
             // dtpTanggal
             // 
-            dtpTanggal.CustomFormat = "11/11/2026";
-            dtpTanggal.Location = new Point(157, 54);
-            dtpTanggal.Margin = new Padding(3, 4, 3, 4);
+            dtpTanggal.CustomFormat = "dd/mm/yyyy";
+            dtpTanggal.Format = DateTimePickerFormat.Custom;
+            dtpTanggal.Location = new Point(139, 36);
             dtpTanggal.Name = "dtpTanggal";
             dtpTanggal.Size = new Size(154, 27);
             dtpTanggal.TabIndex = 2;
@@ -67,24 +66,22 @@
             // cmbKategori
             // 
             cmbKategori.FormattingEnabled = true;
-            cmbKategori.Location = new Point(318, 54);
-            cmbKategori.Margin = new Padding(3, 4, 3, 4);
+            cmbKategori.Location = new Point(280, 36);
             cmbKategori.Name = "cmbKategori";
             cmbKategori.Size = new Size(138, 28);
             cmbKategori.TabIndex = 3;
             // 
             // txtKeterangan
             // 
-            txtKeterangan.Location = new Point(464, 54);
-            txtKeterangan.Margin = new Padding(3, 4, 3, 4);
+            txtKeterangan.Location = new Point(407, 36);
             txtKeterangan.Name = "txtKeterangan";
-            txtKeterangan.Size = new Size(114, 27);
+            txtKeterangan.Size = new Size(286, 23);
             txtKeterangan.TabIndex = 4;
             // 
             // lblKolam
             // 
             lblKolam.AutoSize = true;
-            lblKolam.Location = new Point(12, 30);
+            lblKolam.Location = new Point(12, 18);
             lblKolam.Name = "lblKolam";
             lblKolam.Size = new Size(52, 20);
             lblKolam.TabIndex = 5;
@@ -93,7 +90,7 @@
             // lblTanggal
             // 
             lblTanggal.AutoSize = true;
-            lblTanggal.Location = new Point(157, 30);
+            lblTanggal.Location = new Point(139, 18);
             lblTanggal.Name = "lblTanggal";
             lblTanggal.Size = new Size(61, 20);
             lblTanggal.TabIndex = 6;
@@ -102,7 +99,7 @@
             // lblKategori
             // 
             lblKategori.AutoSize = true;
-            lblKategori.Location = new Point(318, 30);
+            lblKategori.Location = new Point(280, 18);
             lblKategori.Name = "lblKategori";
             lblKategori.Size = new Size(66, 20);
             lblKategori.TabIndex = 7;
@@ -111,7 +108,7 @@
             // lblKeterangan
             // 
             lblKeterangan.AutoSize = true;
-            lblKeterangan.Location = new Point(464, 30);
+            lblKeterangan.Location = new Point(407, 18);
             lblKeterangan.Name = "lblKeterangan";
             lblKeterangan.Size = new Size(85, 20);
             lblKeterangan.TabIndex = 8;
@@ -120,7 +117,7 @@
             // lblJumlah
             // 
             lblJumlah.AutoSize = true;
-            lblJumlah.Location = new Point(585, 30);
+            lblJumlah.Location = new Point(699, 18);
             lblJumlah.Name = "lblJumlah";
             lblJumlah.Size = new Size(87, 20);
             lblJumlah.TabIndex = 9;
@@ -128,16 +125,14 @@
             // 
             // txtJumlah
             // 
-            txtJumlah.Location = new Point(585, 54);
-            txtJumlah.Margin = new Padding(3, 4, 3, 4);
+            txtJumlah.Location = new Point(699, 36);
             txtJumlah.Name = "txtJumlah";
             txtJumlah.Size = new Size(114, 27);
             txtJumlah.TabIndex = 10;
             // 
             // btnTambah
             // 
-            btnTambah.Location = new Point(12, 110);
-            btnTambah.Margin = new Padding(3, 4, 3, 4);
+            btnTambah.Location = new Point(12, 78);
             btnTambah.Name = "btnTambah";
             btnTambah.Size = new Size(86, 31);
             btnTambah.TabIndex = 11;
@@ -146,8 +141,7 @@
             // 
             // btnUbah
             // 
-            btnUbah.Location = new Point(105, 110);
-            btnUbah.Margin = new Padding(3, 4, 3, 4);
+            btnUbah.Location = new Point(93, 78);
             btnUbah.Name = "btnUbah";
             btnUbah.Size = new Size(86, 31);
             btnUbah.TabIndex = 12;
@@ -156,8 +150,7 @@
             // 
             // btnHapus
             // 
-            btnHapus.Location = new Point(197, 110);
-            btnHapus.Margin = new Padding(3, 4, 3, 4);
+            btnHapus.Location = new Point(174, 78);
             btnHapus.Name = "btnHapus";
             btnHapus.Size = new Size(86, 31);
             btnHapus.TabIndex = 13;
@@ -166,8 +159,7 @@
             // 
             // btnBersihkan
             // 
-            btnBersihkan.Location = new Point(291, 110);
-            btnBersihkan.Margin = new Padding(3, 4, 3, 4);
+            btnBersihkan.Location = new Point(256, 78);
             btnBersihkan.Name = "btnBersihkan";
             btnBersihkan.Size = new Size(86, 31);
             btnBersihkan.TabIndex = 14;
@@ -179,16 +171,17 @@
             dgvPengeluaran.AllowUserToAddRows = false;
             dgvPengeluaran.AllowUserToDeleteRows = false;
             dgvPengeluaran.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvPengeluaran.BackgroundColor = Color.White;
             dgvPengeluaran.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPengeluaran.Location = new Point(12, 161);
-            dgvPengeluaran.Margin = new Padding(3, 4, 3, 4);
+            dgvPengeluaran.Location = new Point(12, 116);
             dgvPengeluaran.MultiSelect = false;
             dgvPengeluaran.Name = "dgvPengeluaran";
             dgvPengeluaran.ReadOnly = true;
             dgvPengeluaran.RowHeadersWidth = 51;
             dgvPengeluaran.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPengeluaran.Size = new Size(951, 251);
+            dgvPengeluaran.Size = new Size(826, 188);
             dgvPengeluaran.TabIndex = 15;
+            dgvPengeluaran.CellContentClick += dgvPengeluaran_CellContentClick;
             // 
             // UcPengeluaran
             // 
@@ -212,7 +205,7 @@
             Controls.Add(cmbKolam);
             Margin = new Padding(3, 4, 3, 4);
             Name = "UcPengeluaran";
-            Size = new Size(982, 429);
+            Size = new Size(859, 322);
             ((System.ComponentModel.ISupportInitialize)dgvPengeluaran).EndInit();
             ResumeLayout(false);
             PerformLayout();

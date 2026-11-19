@@ -4,6 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.Windows.Forms;
 using Npgsql;
+using LEFARM.Model;
 
 namespace LEFARM
 {
@@ -33,7 +34,6 @@ namespace LEFARM
                 "Pakan",
                 "Bibit",
                 "Obat",
-                "Listrik",
                 "Lainnya"
             });
 
@@ -89,7 +89,7 @@ namespace LEFARM
                     dgvPengeluaran.Columns["Tanggal"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
                 if (dgvPengeluaran.Columns.Contains("Jumlah (Rp)"))
-                    dgvPengeluaran.Columns["Jumlah (Rp)"].DefaultCellStyle.Format = "N0";
+                    dgvPengeluaran.Columns["Jumlah (Rp)"].DefaultCellStyle.Format = "N2";
             }
             catch (Exception ex)
             {
@@ -141,6 +141,19 @@ namespace LEFARM
 
             try
             {
+                decimal jumlah = decimal.Parse(
+                    txtJumlah.Text,
+                    CultureInfo.GetCultureInfo("id-ID")
+                );
+
+                // Membuat objek dari kelas Pengeluaran
+                Transaksi transaksi = new Pengeluaran(
+                    Convert.ToInt32(cmbKolam.SelectedValue),
+                    dtpTanggal.Value.Date,
+                    txtKeterangan.Text.Trim(),
+                    jumlah
+                );
+
                 string sql = @"
                     INSERT INTO pengeluaran
                     (id_kolam, tanggal, kategori, keterangan, jumlah)
@@ -150,15 +163,17 @@ namespace LEFARM
 
                 Koneksi.Jalankan(
                     sql,
-                    new NpgsqlParameter("@id_kolam", Convert.ToInt32(cmbKolam.SelectedValue)),
-                    new NpgsqlParameter("@tanggal", dtpTanggal.Value.Date),
+                    new NpgsqlParameter("@id_kolam", transaksi.IdKolam),
+                    new NpgsqlParameter("@tanggal", transaksi.Tanggal),
                     new NpgsqlParameter("@kategori", cmbKategori.Text),
-                    new NpgsqlParameter("@keterangan", txtKeterangan.Text.Trim()),
-                    new NpgsqlParameter("@jumlah",
-                        decimal.Parse(txtJumlah.Text, CultureInfo.GetCultureInfo("id-ID")))
+                    new NpgsqlParameter("@keterangan", transaksi.Keterangan),
+                    new NpgsqlParameter("@jumlah", transaksi.HitungNilai())
                 );
 
-                MessageBox.Show("Data pengeluaran berhasil ditambahkan.");
+                MessageBox.Show(
+                    transaksi.AmbilJenis() + " berhasil ditambahkan."
+                );
+
                 TampilkanData();
                 BersihkanForm();
             }
@@ -180,6 +195,19 @@ namespace LEFARM
 
             try
             {
+                decimal jumlah = decimal.Parse(
+                    txtJumlah.Text,
+                    CultureInfo.GetCultureInfo("id-ID")
+                );
+
+                // Membuat objek dari kelas Pengeluaran
+                Transaksi transaksi = new Pengeluaran(
+                    Convert.ToInt32(cmbKolam.SelectedValue),
+                    dtpTanggal.Value.Date,
+                    txtKeterangan.Text.Trim(),
+                    jumlah
+                );
+
                 string sql = @"
                     UPDATE pengeluaran
                     SET id_kolam = @id_kolam,
@@ -192,16 +220,18 @@ namespace LEFARM
 
                 Koneksi.Jalankan(
                     sql,
-                    new NpgsqlParameter("@id_kolam", Convert.ToInt32(cmbKolam.SelectedValue)),
-                    new NpgsqlParameter("@tanggal", dtpTanggal.Value.Date),
+                    new NpgsqlParameter("@id_kolam", transaksi.IdKolam),
+                    new NpgsqlParameter("@tanggal", transaksi.Tanggal),
                     new NpgsqlParameter("@kategori", cmbKategori.Text),
-                    new NpgsqlParameter("@keterangan", txtKeterangan.Text.Trim()),
-                    new NpgsqlParameter("@jumlah",
-                        decimal.Parse(txtJumlah.Text, CultureInfo.GetCultureInfo("id-ID"))),
+                    new NpgsqlParameter("@keterangan", transaksi.Keterangan),
+                    new NpgsqlParameter("@jumlah", transaksi.HitungNilai()),
                     new NpgsqlParameter("@id", idPengeluaran)
                 );
 
-                MessageBox.Show("Data pengeluaran berhasil diubah.");
+                MessageBox.Show(
+                    transaksi.AmbilJenis() + " berhasil diubah."
+                );
+
                 TampilkanData();
                 BersihkanForm();
             }
@@ -210,6 +240,7 @@ namespace LEFARM
                 MessageBox.Show("Gagal mengubah data: " + ex.Message);
             }
         }
+
 
         private void btnHapus_Click(object sender, EventArgs e)
         {
@@ -285,6 +316,11 @@ namespace LEFARM
             txtJumlah.Clear();
 
             dgvPengeluaran.ClearSelection();
+        }
+
+        private void dgvPengeluaran_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
