@@ -9,6 +9,8 @@ namespace LEFARM
 {
     public partial class UcJadwalPakan : UserControl
     {
+        private int _idJadwal = 0;
+
         public UcJadwalPakan()
         {
             InitializeComponent();
@@ -25,9 +27,19 @@ namespace LEFARM
         {
             try
             {
-                string query = "SELECT * FROM jadwal_pakan ORDER BY tanggal, jam";
+                string query = @"SELECT j.id_jadwal, k.nama_kolam, j.tanggal, j.jam,
+                                        j.jenis_pakan, j.jumlah_gram, j.status
+                                 FROM jadwal_pakan j
+                                 JOIN kolam k ON j.id_kolam = k.id_kolam
+                                 ORDER BY j.tanggal, j.jam";
                 DataTable dt = Koneksi.AmbilData(query);
                 dataGridView1.DataSource = dt;
+
+                if (dataGridView1.Columns.Contains("id_jadwal"))
+                    dataGridView1.Columns["id_jadwal"].Visible = false;
+
+                if (dataGridView1.Columns.Contains("nama_kolam"))
+                    dataGridView1.Columns["nama_kolam"].HeaderText = "Nama Kolam";
 
                 if (dataGridView1.Columns.Contains("tanggal"))
                     dataGridView1.Columns["tanggal"].DefaultCellStyle.Format = "dd-MM-yyyy";
@@ -38,67 +50,63 @@ namespace LEFARM
             }
         }
 
-        private bool ValidasiInput(out TimeSpan jam, out int gram)
+        private int CariIdKolam(string namaKolam)
         {
-            jam = TimeSpan.Zero;
-            gram = 0;
+            string aman = namaKolam.Trim().Replace("'", "''");
+            DataTable dt = Koneksi.AmbilData(
+                "SELECT id_kolam FROM kolam WHERE LOWER(nama_kolam) = LOWER('" + aman + "')");
 
-            if (string.IsNullOrWhiteSpace(txtIdKolam.Text))
-            {
-                MessageBox.Show("Nama kolam wajib diisi.");
-                txtIdKolam.Focus();
-                return false;
-            }
-            if (!TimeSpan.TryParse(txtJam.Text, out jam))
-            {
-                MessageBox.Show("Format jam salah. Contoh: 08:00");
-                txtJam.Focus();
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(txtJenisPakan.Text))
-            {
-                MessageBox.Show("Jenis pakan wajib diisi.");
-                txtJenisPakan.Focus();
-                return false;
-            }
-            if (!int.TryParse(txtJumlahGram.Text, out gram) || gram <= 0)
-            {
-                MessageBox.Show("Jumlah gram harus berupa angka lebih dari 0.");
-                txtJumlahGram.Focus();
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(cbStatus.Text))
-            {
-                MessageBox.Show("Status wajib dipilih.");
-                cbStatus.Focus();
-                return false;
-            }
-            return true;
+            if (dt.Rows.Count == 0)
+                throw new ArgumentException("Kolam \"" + namaKolam.Trim() + "\" tidak ditemukan di data kolam.");
+
+            return Convert.ToInt32(dt.Rows[0]["id_kolam"]);
+        }
+        private JadwalPakan BuatObjek()
+        {
+            if (!TimeSpan.TryParse(txtJam.Text, out TimeSpan jam))
+                throw new ArgumentException("Format jam salah. Contoh: 08:00");
+
+            if (!int.TryParse(txtJumlahGram.Text, out int gram))
+                throw new ArgumentException("Jumlah gram harus berupa angka.");
+
+            JadwalPakan j = new JadwalPakan();
+            j.NamaKolam = txtIdKolam.Text;
+            j.IdKolam = CariIdKolam(j.NamaKolam);   
+            j.Tanggal = dtpTanggal.Value.Date;
+            j.Jam = jam;
+            j.JenisPakan = txtJenisPakan.Text;
+            j.JumlahGram = gram;
+            j.StatusKerja = cbStatus.Text;
+            return j;
         }
 
-        private NpgsqlParameter[] BuatParameter(TimeSpan jam, int gram)
+        private NpgsqlParameter[] BuatParameter(JadwalPakan j)
         {
             return new NpgsqlParameter[] {
-                new NpgsqlParameter("@kolam", NpgsqlDbType.Varchar) { Value = txtIdKolam.Text.Trim() },
-                new NpgsqlParameter("@tgl", NpgsqlDbType.Date) { Value = dtpTanggal.Value.Date },
-                new NpgsqlParameter("@jam", NpgsqlDbType.Time) { Value = jam },
-                new NpgsqlParameter("@pakan", NpgsqlDbType.Varchar) { Value = txtJenisPakan.Text.Trim() },
-                new NpgsqlParameter("@gram", NpgsqlDbType.Integer) { Value = gram },
-                new NpgsqlParameter("@status", NpgsqlDbType.Varchar) { Value = cbStatus.Text }
+                new NpgsqlParameter("@kolam", NpgsqlDbType.Integer) { Value = j.IdKolam },
+                new NpgsqlParameter("@tgl", NpgsqlDbType.Date) { Value = j.Tanggal },
+                new NpgsqlParameter("@jam", NpgsqlDbType.Time) { Value = j.Jam },
+                new NpgsqlParameter("@pakan", NpgsqlDbType.Varchar) { Value = j.JenisPakan },
+                new NpgsqlParameter("@gram", NpgsqlDbType.Integer) { Value = j.JumlahGram },
+                new NpgsqlParameter("@status", NpgsqlDbType.Varchar) { Value = j.StatusKerja }
             };
         }
 
         private void btnSimpan_Click(object sender, EventArgs e)
         {
-            if (!ValidasiInput(out TimeSpan jam, out int gram)) return;
-
             try
             {
-                string query = "INSERT INTO jadwal_pakan (nama_kolam, tanggal, jam, jenis_pakan, jumlah_gram, status) VALUES (@kolam, @tgl, @jam, @pakan, @gram, @status)";
+                JadwalPakan jadwal = BuatObjek();
 
-                Koneksi.Jalankan(query, BuatParameter(jam, gram));
-                MessageBox.Show("Data berhasil disimpan!");
+                string query = "INSERT INTO jadwal_pakan (id_kolam, tanggal, jam, jenis_pakan, jumlah_gram, status) VALUES (@kolam, @tgl, @jam, @pakan, @gram, @status)";
+
+                Koneksi.Jalankan(query, BuatParameter(jadwal));
+                MessageBox.Show("Data berhasil disimpan!\n" + jadwal.Ringkasan());
                 TampilData();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             catch (Exception ex)
             {
@@ -108,15 +116,29 @@ namespace LEFARM
 
         private void btnUbah_Click(object sender, EventArgs e)
         {
-            if (!ValidasiInput(out TimeSpan jam, out int gram)) return;
+            if (_idJadwal == 0)
+            {
+                MessageBox.Show("Pilih data dulu dari tabel yang mau diubah.");
+                return;
+            }
 
             try
             {
-                string query = "UPDATE jadwal_pakan SET tanggal=@tgl, jam=@jam, jenis_pakan=@pakan, jumlah_gram=@gram, status=@status WHERE nama_kolam=@kolam";
+                JadwalPakan jadwal = BuatObjek();
 
-                Koneksi.Jalankan(query, BuatParameter(jam, gram));
-                MessageBox.Show("Data berhasil diubah!");
+                string query = "UPDATE jadwal_pakan SET id_kolam=@kolam, tanggal=@tgl, jam=@jam, jenis_pakan=@pakan, jumlah_gram=@gram, status=@status WHERE id_jadwal=@id";
+
+                NpgsqlParameter[] param = BuatParameter(jadwal);
+                Array.Resize(ref param, param.Length + 1);
+                param[param.Length - 1] = new NpgsqlParameter("@id", NpgsqlDbType.Integer) { Value = _idJadwal };
+
+                Koneksi.Jalankan(query, param);
+                MessageBox.Show("Data berhasil diubah!\n" + jadwal.Ringkasan());
                 TampilData();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             catch (Exception ex)
             {
@@ -126,9 +148,9 @@ namespace LEFARM
 
         private void btnHapus_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIdKolam.Text))
+            if (_idJadwal == 0)
             {
-                MessageBox.Show("Pilih data dulu dari tabel atau isi nama kolam.");
+                MessageBox.Show("Pilih data dulu dari tabel yang mau dihapus.");
                 return;
             }
 
@@ -139,9 +161,9 @@ namespace LEFARM
 
             try
             {
-                string query = "DELETE FROM jadwal_pakan WHERE nama_kolam=@kolam";
+                string query = "DELETE FROM jadwal_pakan WHERE id_jadwal=@id";
                 NpgsqlParameter[] parameters = {
-                    new NpgsqlParameter("@kolam", NpgsqlDbType.Varchar) { Value = txtIdKolam.Text.Trim() }
+                    new NpgsqlParameter("@id", NpgsqlDbType.Integer) { Value = _idJadwal }
                 };
 
                 Koneksi.Jalankan(query, parameters);
@@ -160,6 +182,8 @@ namespace LEFARM
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+            _idJadwal = Convert.ToInt32(row.Cells["id_jadwal"].Value);
 
             txtIdKolam.Text = row.Cells["nama_kolam"].Value?.ToString() ?? "";
 
@@ -186,6 +210,8 @@ namespace LEFARM
 
         private void btnBersihkan_Click(object sender, EventArgs e)
         {
+            _idJadwal = 0;
+
             txtIdKolam.Clear();
             dtpTanggal.Value = DateTime.Now;
             txtJam.Clear();
@@ -194,6 +220,79 @@ namespace LEFARM
             cbStatus.Text = "Belum";
 
             txtIdKolam.Focus();
+        }
+    }
+}
+
+namespace LEFARM.Model
+{
+    public class JadwalPakan : Jadwal
+    {
+        private string namaKolam;
+        private string statusKerja = "Belum";
+        private string jenisPakan;
+        private int jumlahGram;
+
+        public string NamaKolam
+        {
+            get { return namaKolam; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Nama kolam wajib diisi");
+                }
+                namaKolam = value.Trim();
+            }
+        }
+
+        public string StatusKerja
+        {
+            get { return statusKerja; }
+            set
+            {
+                if (value != "Belum" && value != "Proses" && value != "Selesai")
+                {
+                    throw new ArgumentException("Status harus Belum, Proses, atau Selesai");
+                }
+                statusKerja = value;
+            }
+        }
+
+        public string JenisPakan
+        {
+            get { return jenisPakan; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Jenis pakan wajib diisi");
+                }
+                jenisPakan = value.Trim();
+            }
+        }
+
+        public int JumlahGram
+        {
+            get { return jumlahGram; }
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("Jumlah gram harus lebih dari 0");
+                }
+                jumlahGram = value;
+            }
+        }
+
+        public override string AmbilJenis()
+        {
+            return "Pakan";
+        }
+
+        public override string Ringkasan()
+        {
+            return "Pakan " + JenisPakan + " " + JumlahGram + " gram untuk " + NamaKolam + " (" + StatusKerja + ")";
         }
     }
 }
