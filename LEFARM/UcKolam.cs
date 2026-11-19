@@ -1,14 +1,13 @@
-﻿using LEFARM.Model;
-using Npgsql;
-using NpgsqlTypes;
+﻿// FILE: UcKolam.cs (halaman Data Kolam)
 using System;
-using System.Data;
 using System.Windows.Forms;
+using Npgsql;
 
 namespace LEFARM
 {
     public partial class UcKolam : UserControl
     {
+        // Menyimpan id kolam yang dipilih di tabel (0 = belum ada yang dipilih)
         private int idTerpilih = 0;
 
         public UcKolam()
@@ -25,6 +24,7 @@ namespace LEFARM
 
         private void UcKolam_Load(object sender, EventArgs e)
         {
+            // Supaya designer tidak mencoba membuka database
             if (DesignMode)
             {
                 return;
@@ -32,20 +32,17 @@ namespace LEFARM
             TampilkanData();
         }
 
+        // Mengisi tabel dengan data dari database
         private void TampilkanData()
         {
             try
             {
-                dgvKolam.DataSource = Koneksi.AmbilData(
-                    "SELECT id_kolam, nama_kolam, ukuran, jumlah_bibit, tanggal_tebar " +
-                    "FROM kolam ORDER BY id_kolam");
+                Kolam k = new Kolam();
+                dgvKolam.DataSource = k.LihatDataKolam();
 
                 dgvKolam.Columns["id_kolam"].HeaderText = "ID";
                 dgvKolam.Columns["nama_kolam"].HeaderText = "Nama Kolam";
                 dgvKolam.Columns["ukuran"].HeaderText = "Ukuran";
-                dgvKolam.Columns["jumlah_bibit"].HeaderText = "Jumlah Bibit";
-                dgvKolam.Columns["tanggal_tebar"].HeaderText = "Tanggal Tebar";
-                dgvKolam.Columns["tanggal_tebar"].DefaultCellStyle.Format = "dd/MM/yyyy";
             }
             catch (Exception ex)
             {
@@ -53,24 +50,22 @@ namespace LEFARM
             }
         }
 
+        // Mengosongkan isian form
         private void BersihkanForm()
         {
             idTerpilih = 0;
             txtNamaKolam.Clear();
             txtUkuran.Clear();
-            nudJumlahBibit.Value = 0;
-            dtpTanggalTebar.Value = DateTime.Today;
             dgvKolam.ClearSelection();
         }
 
+        // Memindahkan isian form ke objek Kolam
         private Kolam BuatKolamDariForm()
         {
             Kolam k = new Kolam();
             k.IdKolam = idTerpilih;
             k.NamaKolam = txtNamaKolam.Text;
             k.Ukuran = txtUkuran.Text;
-            k.JumlahBibit = (int)nudJumlahBibit.Value;
-            k.TanggalTebar = dtpTanggalTebar.Value.Date;
             return k;
         }
 
@@ -79,21 +74,16 @@ namespace LEFARM
             try
             {
                 Kolam k = BuatKolamDariForm();
-                Koneksi.Jalankan(
-                    "INSERT INTO kolam (nama_kolam, ukuran, jumlah_bibit, tanggal_tebar) " +
-                    "VALUES (@nama, @ukuran, @bibit, @tanggal)",
-                    new NpgsqlParameter("@nama", k.NamaKolam),
-                    new NpgsqlParameter("@ukuran", k.Ukuran),
-                    new NpgsqlParameter("@bibit", k.JumlahBibit),
-                    new NpgsqlParameter("@tanggal", NpgsqlDbType.Date) { Value = k.TanggalTebar });
+                k.TambahDataKolam();
 
-                MessageBox.Show("Data berhasil ditambahkan");
+                MessageBox.Show("Data berhasil ditambahkan!");
                 TampilkanData();
                 BersihkanForm();
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show(ex.Message);
+                // Pesan dari kelas Kolam: "Semua kolom wajib diisi"
+                MessageBox.Show(ex.Message + "!");
             }
             catch (Exception ex)
             {
@@ -105,23 +95,16 @@ namespace LEFARM
         {
             if (idTerpilih == 0)
             {
-                MessageBox.Show("Pilih dulu data yang mau diubah di tabel");
+                MessageBox.Show("Pilih terlebih dahulu data yang mau diubah");
                 return;
             }
 
             try
             {
                 Kolam k = BuatKolamDariForm();
-                Koneksi.Jalankan(
-                    "UPDATE kolam SET nama_kolam = @nama, ukuran = @ukuran, " +
-                    "jumlah_bibit = @bibit, tanggal_tebar = @tanggal WHERE id_kolam = @id",
-                    new NpgsqlParameter("@nama", k.NamaKolam),
-                    new NpgsqlParameter("@ukuran", k.Ukuran),
-                    new NpgsqlParameter("@bibit", k.JumlahBibit),
-                    new NpgsqlParameter("@tanggal", NpgsqlDbType.Date) { Value = k.TanggalTebar },
-                    new NpgsqlParameter("@id", k.IdKolam));
+                k.UbahDataKolam();
 
-                MessageBox.Show("Data berhasil diubah");
+                MessageBox.Show("Data berhasil diubah.");
                 TampilkanData();
                 BersihkanForm();
             }
@@ -139,7 +122,7 @@ namespace LEFARM
         {
             if (idTerpilih == 0)
             {
-                MessageBox.Show("Pilih dulu data yang mau dihapus di tabel");
+                MessageBox.Show("Pilih terlebih dahulu data yang mau dihapus");
                 return;
             }
 
@@ -151,8 +134,8 @@ namespace LEFARM
 
             try
             {
-                Koneksi.Jalankan("DELETE FROM kolam WHERE id_kolam = @id",
-                    new NpgsqlParameter("@id", idTerpilih));
+                Kolam k = BuatKolamDariForm();
+                k.HapusDataKolam();
 
                 MessageBox.Show("Data berhasil dihapus");
                 TampilkanData();
@@ -160,6 +143,7 @@ namespace LEFARM
             }
             catch (PostgresException ex) when (ex.SqlState == "23503")
             {
+                // Kode 23503 = kolam masih dipakai tabel lain
                 MessageBox.Show("Kolam ini tidak bisa dihapus karena masih dipakai di data lain");
             }
             catch (Exception ex)
@@ -168,6 +152,7 @@ namespace LEFARM
             }
         }
 
+        // ===== Tombol dan tabel =====
         private void btnTambah_Click(object sender, EventArgs e)
         {
             TambahData();
@@ -188,6 +173,7 @@ namespace LEFARM
             BersihkanForm();
         }
 
+        // Klik baris di tabel: isi form dengan data baris itu
         private void dgvKolam_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -199,8 +185,6 @@ namespace LEFARM
             idTerpilih = Convert.ToInt32(baris.Cells["id_kolam"].Value);
             txtNamaKolam.Text = Convert.ToString(baris.Cells["nama_kolam"].Value);
             txtUkuran.Text = Convert.ToString(baris.Cells["ukuran"].Value);
-            nudJumlahBibit.Value = Convert.ToDecimal(baris.Cells["jumlah_bibit"].Value);
-            dtpTanggalTebar.Value = DateOnly.Parse(baris.Cells["tanggal_tebar"].Value.ToString()).ToDateTime(TimeOnly.MinValue);
         }
     }
 }

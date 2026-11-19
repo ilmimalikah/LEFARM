@@ -1,5 +1,4 @@
-﻿
-using Npgsql;
+﻿using Npgsql;
 using System;
 using System.Data;
 using System.Globalization;
@@ -11,7 +10,7 @@ using System.Windows.Forms;
 
 namespace LEFARM
 {
-    public partial class panelPengeluaran : UserControl
+    public partial class UcLaporan : UserControl
     {
         private PrintDocument dokumenCetak = new PrintDocument();
         private int barisCetak = 0;
@@ -19,11 +18,11 @@ namespace LEFARM
         private decimal totalPemasukan = 0;
         private decimal totalPengeluaran = 0;
 
-        public panelPengeluaran()
+        public UcLaporan()
         {
             InitializeComponent();
 
-            this.Load += panelPengeluaran_Load;
+            this.Load += UcLaporan_Load;
 
             btnTampilkan.Click += btnTampilkan_Click;
             btnCetak.Click += btnCetak_Click;
@@ -48,8 +47,14 @@ namespace LEFARM
         // 2. PERSIAPAN TAMPILAN
         // =========================================
 
-        private void panelPengeluaran_Load(object sender, EventArgs e)
+        private void UcLaporan_Load(object sender, EventArgs e)
         {
+            // Supaya designer tidak mencoba membuka database
+            if (DesignMode)
+            {
+                return;
+            }
+
             try
             {
                 AturBulan();

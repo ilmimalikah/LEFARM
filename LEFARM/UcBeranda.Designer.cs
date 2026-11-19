@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            label1 = new Label();
             lblTotalPemasukan = new Label();
+            label1 = new Label();
             panel2 = new Panel();
             lblTotalPengeluaran = new Label();
             label3 = new Label();
@@ -59,15 +59,6 @@
             panel1.Size = new Size(220, 80);
             panel1.TabIndex = 0;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(10, 10);
-            label1.Name = "label1";
-            label1.Size = new Size(119, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Total Pemasukan";
-            // 
             // lblTotalPemasukan
             // 
             lblTotalPemasukan.AutoSize = true;
@@ -77,6 +68,15 @@
             lblTotalPemasukan.Size = new Size(62, 31);
             lblTotalPemasukan.TabIndex = 1;
             lblTotalPemasukan.Text = "Rp 0";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(10, 10);
+            label1.Name = "label1";
+            label1.Size = new Size(119, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Total Pemasukan";
             // 
             // panel2
             // 
@@ -163,7 +163,7 @@
             label5.Name = "label5";
             label5.Size = new Size(85, 20);
             label5.TabIndex = 0;
-            label5.Text = "Laba Bersih";
+            label5.Text = "Total Panen";
             // 
             // label2
             // 
