@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtIdKolam = new TextBox();
             label1 = new Label();
             txtJam = new TextBox();
             label2 = new Label();
@@ -43,24 +42,18 @@
             btnHapus = new Button();
             dataGridView1 = new DataGridView();
             btnBersihkan = new Button();
+            cbKolam = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
-            // 
-            // txtIdKolam
-            // 
-            txtIdKolam.Location = new Point(27, 58);
-            txtIdKolam.Name = "txtIdKolam";
-            txtIdKolam.Size = new Size(125, 27);
-            txtIdKolam.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Location = new Point(27, 35);
             label1.Name = "label1";
-            label1.Size = new Size(58, 20);
+            label1.Size = new Size(106, 20);
             label1.TabIndex = 1;
-            label1.Text = "KOLAM";
+            label1.Text = "NAMA KOLAM";
             // 
             // txtJam
             // 
@@ -187,10 +180,20 @@
             btnBersihkan.UseVisualStyleBackColor = false;
             btnBersihkan.Click += btnBersihkan_Click;
             // 
+            // cbKolam
+            // 
+            cbKolam.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbKolam.FormattingEnabled = true;
+            cbKolam.Location = new Point(27, 55);
+            cbKolam.Name = "cbKolam";
+            cbKolam.Size = new Size(125, 28);
+            cbKolam.TabIndex = 15;
+            // 
             // UcJadwalPengurasan
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(cbKolam);
             Controls.Add(btnBersihkan);
             Controls.Add(dataGridView1);
             Controls.Add(btnHapus);
@@ -205,7 +208,6 @@
             Controls.Add(label2);
             Controls.Add(txtJam);
             Controls.Add(label1);
-            Controls.Add(txtIdKolam);
             Name = "UcJadwalPengurasan";
             Size = new Size(982, 429);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -214,8 +216,6 @@
         }
 
         #endregion
-
-        private TextBox txtIdKolam;
         private Label label1;
         private TextBox txtJam;
         private Label label2;
@@ -230,5 +230,6 @@
         private Button btnHapus;
         private DataGridView dataGridView1;
         private Button btnBersihkan;
+        private ComboBox cbKolam;
     }
 }

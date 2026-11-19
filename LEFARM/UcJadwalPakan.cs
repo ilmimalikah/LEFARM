@@ -19,8 +19,49 @@ namespace LEFARM
             dtpTanggal.CustomFormat = "dd-MM-yyyy";
 
             cbStatus.Text = "Belum";
+            cbKolam.DropDownStyle = ComboBoxStyle.DropDownList;
 
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
+
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.BackgroundColor = System.Drawing.Color.White;
+
+            dataGridView1.CellClick -= dataGridView1_CellClick;
+            dataGridView1.CellClick += dataGridView1_CellClick;
+
+            this.VisibleChanged += (s, e) => { if (this.Visible) MuatKolam(); };
+            cbKolam.Enter += (s, e) => MuatKolam();
+
+            MuatKolam();
             TampilData();
+        }
+
+        private void MuatKolam()
+        {
+            try
+            {
+                object terpilih = cbKolam.SelectedValue;
+
+                DataTable dt = Koneksi.AmbilData("SELECT id_kolam, nama_kolam FROM kolam ORDER BY nama_kolam");
+                cbKolam.DataSource = dt;
+                cbKolam.DisplayMember = "nama_kolam";
+                cbKolam.ValueMember = "id_kolam";
+
+                if (terpilih != null)
+                    cbKolam.SelectedValue = terpilih;
+                else
+                    cbKolam.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal memuat daftar kolam: " + ex.Message);
+            }
         }
 
         private void TampilData()
@@ -35,14 +76,16 @@ namespace LEFARM
                 DataTable dt = Koneksi.AmbilData(query);
                 dataGridView1.DataSource = dt;
 
-                if (dataGridView1.Columns.Contains("id_jadwal"))
-                    dataGridView1.Columns["id_jadwal"].Visible = false;
+                dataGridView1.Columns["id_jadwal"].Visible = false;
 
-                if (dataGridView1.Columns.Contains("nama_kolam"))
-                    dataGridView1.Columns["nama_kolam"].HeaderText = "Nama Kolam";
+                dataGridView1.Columns["nama_kolam"].HeaderText = "Nama Kolam";
+                dataGridView1.Columns["tanggal"].HeaderText = "Tanggal";
+                dataGridView1.Columns["jam"].HeaderText = "Jam";
+                dataGridView1.Columns["jenis_pakan"].HeaderText = "Jenis Pakan";
+                dataGridView1.Columns["jumlah_gram"].HeaderText = "Jumlah Gram";
+                dataGridView1.Columns["status"].HeaderText = "Status";
 
-                if (dataGridView1.Columns.Contains("tanggal"))
-                    dataGridView1.Columns["tanggal"].DefaultCellStyle.Format = "dd-MM-yyyy";
+                dataGridView1.Columns["tanggal"].DefaultCellStyle.Format = "dd-MM-yyyy";
             }
             catch (Exception ex)
             {
@@ -50,19 +93,11 @@ namespace LEFARM
             }
         }
 
-        private int CariIdKolam(string namaKolam)
-        {
-            string aman = namaKolam.Trim().Replace("'", "''");
-            DataTable dt = Koneksi.AmbilData(
-                "SELECT id_kolam FROM kolam WHERE LOWER(nama_kolam) = LOWER('" + aman + "')");
-
-            if (dt.Rows.Count == 0)
-                throw new ArgumentException("Kolam \"" + namaKolam.Trim() + "\" tidak ditemukan di data kolam.");
-
-            return Convert.ToInt32(dt.Rows[0]["id_kolam"]);
-        }
         private JadwalPakan BuatObjek()
         {
+            if (cbKolam.SelectedValue == null)
+                throw new ArgumentException("Nama kolam wajib dipilih.");
+
             if (!TimeSpan.TryParse(txtJam.Text, out TimeSpan jam))
                 throw new ArgumentException("Format jam salah. Contoh: 08:00");
 
@@ -70,8 +105,8 @@ namespace LEFARM
                 throw new ArgumentException("Jumlah gram harus berupa angka.");
 
             JadwalPakan j = new JadwalPakan();
-            j.NamaKolam = txtIdKolam.Text;
-            j.IdKolam = CariIdKolam(j.NamaKolam);   
+            j.NamaKolam = cbKolam.Text;
+            j.IdKolam = Convert.ToInt32(cbKolam.SelectedValue);
             j.Tanggal = dtpTanggal.Value.Date;
             j.Jam = jam;
             j.JenisPakan = txtJenisPakan.Text;
@@ -185,7 +220,8 @@ namespace LEFARM
 
             _idJadwal = Convert.ToInt32(row.Cells["id_jadwal"].Value);
 
-            txtIdKolam.Text = row.Cells["nama_kolam"].Value?.ToString() ?? "";
+            string namaKolam = row.Cells["nama_kolam"].Value?.ToString() ?? "";
+            cbKolam.SelectedIndex = cbKolam.FindStringExact(namaKolam);
 
             if (row.Cells["tanggal"].Value != null &&
                 DateTime.TryParse(row.Cells["tanggal"].Value.ToString(), out DateTime tgl))
@@ -212,14 +248,14 @@ namespace LEFARM
         {
             _idJadwal = 0;
 
-            txtIdKolam.Clear();
+            cbKolam.SelectedIndex = -1;
             dtpTanggal.Value = DateTime.Now;
             txtJam.Clear();
             txtJenisPakan.Clear();
             txtJumlahGram.Clear();
             cbStatus.Text = "Belum";
 
-            txtIdKolam.Focus();
+            cbKolam.Focus();
         }
     }
 }

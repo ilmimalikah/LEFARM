@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtIdKolam = new TextBox();
             label1 = new Label();
             txtJam = new TextBox();
             label2 = new Label();
@@ -42,27 +41,21 @@
             label6 = new Label();
             btnSimpan = new Button();
             btnUbah = new Button();
-            button1 = new Button();
+            btnHapus = new Button();
             dataGridView1 = new DataGridView();
             btnBersihkan = new Button();
+            cbKolam = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
-            // 
-            // txtIdKolam
-            // 
-            txtIdKolam.Location = new Point(29, 56);
-            txtIdKolam.Name = "txtIdKolam";
-            txtIdKolam.Size = new Size(125, 27);
-            txtIdKolam.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(29, 33);
+            label1.Location = new Point(29, 32);
             label1.Name = "label1";
-            label1.Size = new Size(58, 20);
+            label1.Size = new Size(106, 20);
             label1.TabIndex = 1;
-            label1.Text = "KOLAM";
+            label1.Text = "NAMA KOLAM";
             // 
             // txtJam
             // 
@@ -170,15 +163,16 @@
             btnUbah.UseVisualStyleBackColor = false;
             btnUbah.Click += btnUbah_Click;
             // 
-            // button1
+            // btnHapus
             // 
-            button1.BackColor = Color.Silver;
-            button1.Location = new Point(279, 114);
-            button1.Name = "button1";
-            button1.Size = new Size(98, 31);
-            button1.TabIndex = 14;
-            button1.Text = "HAPUS";
-            button1.UseVisualStyleBackColor = false;
+            btnHapus.BackColor = Color.Silver;
+            btnHapus.Location = new Point(279, 114);
+            btnHapus.Name = "btnHapus";
+            btnHapus.Size = new Size(98, 31);
+            btnHapus.TabIndex = 14;
+            btnHapus.Text = "HAPUS";
+            btnHapus.UseVisualStyleBackColor = false;
+            btnHapus.Click += btnHapus_Click;
             // 
             // dataGridView1
             // 
@@ -200,13 +194,23 @@
             btnBersihkan.UseVisualStyleBackColor = false;
             btnBersihkan.Click += btnBersihkan_Click;
             // 
+            // cbKolam
+            // 
+            cbKolam.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbKolam.FormattingEnabled = true;
+            cbKolam.Location = new Point(29, 55);
+            cbKolam.Name = "cbKolam";
+            cbKolam.Size = new Size(120, 28);
+            cbKolam.TabIndex = 17;
+            // 
             // UcJadwalPakan
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(cbKolam);
             Controls.Add(btnBersihkan);
             Controls.Add(dataGridView1);
-            Controls.Add(button1);
+            Controls.Add(btnHapus);
             Controls.Add(btnUbah);
             Controls.Add(btnSimpan);
             Controls.Add(label6);
@@ -220,7 +224,6 @@
             Controls.Add(label2);
             Controls.Add(txtJam);
             Controls.Add(label1);
-            Controls.Add(txtIdKolam);
             Name = "UcJadwalPakan";
             Size = new Size(982, 429);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -229,8 +232,6 @@
         }
 
         #endregion
-
-        private TextBox txtIdKolam;
         private Label label1;
         private TextBox txtJam;
         private Label label2;
@@ -244,8 +245,9 @@
         private Label label6;
         private Button btnSimpan;
         private Button btnUbah;
-        private Button button1;
+        private Button btnHapus;
         private DataGridView dataGridView1;
         private Button btnBersihkan;
+        private ComboBox cbKolam;
     }
 }
