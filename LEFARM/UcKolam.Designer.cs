@@ -30,18 +30,13 @@
         {
             label1 = new Label();
             label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
             txtNamaKolam = new TextBox();
             txtUkuran = new TextBox();
-            nudJumlahBibit = new NumericUpDown();
-            dtpTanggalTebar = new DateTimePicker();
             btnTambah = new Button();
             btnUbah = new Button();
             btnHapus = new Button();
             btnBersihkan = new Button();
             dgvKolam = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)nudJumlahBibit).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvKolam).BeginInit();
             SuspendLayout();
             // 
@@ -63,24 +58,6 @@
             label2.TabIndex = 1;
             label2.Text = "Ukuran";
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(380, 20);
-            label3.Name = "label3";
-            label3.Size = new Size(90, 20);
-            label3.TabIndex = 2;
-            label3.Text = "Jumlah Bibit";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(520, 20);
-            label4.Name = "label4";
-            label4.Size = new Size(102, 20);
-            label4.TabIndex = 3;
-            label4.Text = "Tanggal Tebar";
-            // 
             // txtNamaKolam
             // 
             txtNamaKolam.Location = new Point(20, 42);
@@ -94,23 +71,6 @@
             txtUkuran.Name = "txtUkuran";
             txtUkuran.Size = new Size(140, 27);
             txtUkuran.TabIndex = 5;
-            // 
-            // nudJumlahBibit
-            // 
-            nudJumlahBibit.Location = new Point(380, 42);
-            nudJumlahBibit.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            nudJumlahBibit.Name = "nudJumlahBibit";
-            nudJumlahBibit.Size = new Size(120, 27);
-            nudJumlahBibit.TabIndex = 6;
-            // 
-            // dtpTanggalTebar
-            // 
-            dtpTanggalTebar.CustomFormat = "dd/MM/yyyy";
-            dtpTanggalTebar.Format = DateTimePickerFormat.Custom;
-            dtpTanggalTebar.Location = new Point(520, 42);
-            dtpTanggalTebar.Name = "dtpTanggalTebar";
-            dtpTanggalTebar.Size = new Size(150, 27);
-            dtpTanggalTebar.TabIndex = 7;
             // 
             // btnTambah
             // 
@@ -172,17 +132,12 @@
             Controls.Add(btnHapus);
             Controls.Add(btnUbah);
             Controls.Add(btnTambah);
-            Controls.Add(dtpTanggalTebar);
-            Controls.Add(nudJumlahBibit);
             Controls.Add(txtUkuran);
             Controls.Add(txtNamaKolam);
-            Controls.Add(label4);
-            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "UcKolam";
             Size = new Size(982, 429);
-            ((System.ComponentModel.ISupportInitialize)nudJumlahBibit).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvKolam).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -192,12 +147,8 @@
 
         private Label label1;
         private Label label2;
-        private Label label3;
-        private Label label4;
         private TextBox txtNamaKolam;
         private TextBox txtUkuran;
-        private NumericUpDown nudJumlahBibit;
-        private DateTimePicker dtpTanggalTebar;
         private Button btnTambah;
         private Button btnUbah;
         private Button btnHapus;

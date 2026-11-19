@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// FILE: Model/Kolam.cs
+using System;
+using System.Data;
+using Npgsql;
 
-namespace LEFARM.Model
+namespace LEFARM
 {
     public class Kolam
     {
+        // Data disimpan private (enkapsulasi)
         private int idKolam;
         private string namaKolam = "";
         private string ukuran = "";
-        private int jumlahBibit;
-        private DateTime tanggalTebar = DateTime.Today;
 
+        // Property: pintu untuk membaca dan mengisi data
         public int IdKolam
         {
             get { return idKolam; }
@@ -21,46 +22,60 @@ namespace LEFARM.Model
         public string NamaKolam
         {
             get { return namaKolam; }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Semua kolom wajib diisi");
-                }
-                namaKolam = value.Trim();
-            }
+            set { namaKolam = value.Trim(); }
         }
 
         public string Ukuran
         {
             get { return ukuran; }
-            set
+            set { ukuran = value.Trim(); }
+        }
+
+        // Memeriksa isian. Kalau ada yang kosong, lempar pesan error.
+        private void PeriksaData()
+        {
+            if (namaKolam == "" || ukuran == "")
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Semua kolom wajib diisi");
-                }
-                ukuran = value.Trim();
+                throw new ArgumentException("Semua kolom wajib diisi");
             }
         }
 
-        public int JumlahBibit
+        // Melihat data kolam
+        public DataTable LihatDataKolam()
         {
-            get { return jumlahBibit; }
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("Jumlah bibit harus lebih dari 0");
-                }
-                jumlahBibit = value;
-            }
+            return Koneksi.AmbilData(
+                "SELECT id_kolam, nama_kolam, ukuran FROM kolam ORDER BY id_kolam");
         }
 
-        public DateTime TanggalTebar
+        // Menambah data kolam
+        public void TambahDataKolam()
         {
-            get { return tanggalTebar; }
-            set { tanggalTebar = value; }
+            PeriksaData();
+
+            Koneksi.Jalankan(
+                "INSERT INTO kolam (nama_kolam, ukuran) VALUES (@nama, @ukuran)",
+                new NpgsqlParameter("@nama", namaKolam),
+                new NpgsqlParameter("@ukuran", ukuran));
+        }
+
+        // Mengubah data kolam
+        public void UbahDataKolam()
+        {
+            PeriksaData();
+
+            Koneksi.Jalankan(
+                "UPDATE kolam SET nama_kolam = @nama, ukuran = @ukuran WHERE id_kolam = @id",
+                new NpgsqlParameter("@nama", namaKolam),
+                new NpgsqlParameter("@ukuran", ukuran),
+                new NpgsqlParameter("@id", idKolam));
+        }
+
+        // Menghapus data kolam
+        public void HapusDataKolam()
+        {
+            Koneksi.Jalankan(
+                "DELETE FROM kolam WHERE id_kolam = @id",
+                new NpgsqlParameter("@id", idKolam));
         }
     }
 }

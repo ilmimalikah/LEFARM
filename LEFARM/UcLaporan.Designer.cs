@@ -1,6 +1,6 @@
 ﻿namespace LEFARM
 {
-    partial class panelPengeluaran
+    partial class UcLaporan
     {
         /// <summary>
         /// Required designer variable.
