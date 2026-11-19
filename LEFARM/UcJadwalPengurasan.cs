@@ -68,11 +68,12 @@ namespace LEFARM
         {
             try
             {
-                string query = @"SELECT j.id_jadwal, k.nama_kolam, j.tanggal, j.jam,
-                                        j.keterangan, j.status
-                                 FROM jadwal_pengurasan j
-                                 JOIN kolam k ON j.id_kolam = k.id_kolam
-                                 ORDER BY j.tanggal, j.jam";
+                string query = @"SELECT j.id_jadwal, k.nama_kolam, j.tanggal,
+                        to_char(j.jam, 'HH24:MI') AS jam,
+                        j.keterangan, j.status
+                 FROM jadwal_pengurasan j
+                 JOIN kolam k ON j.id_kolam = k.id_kolam
+                 ORDER BY j.tanggal, j.jam";
                 DataTable dt = Koneksi.AmbilData(query);
                 dataGridView1.DataSource = dt;
 
